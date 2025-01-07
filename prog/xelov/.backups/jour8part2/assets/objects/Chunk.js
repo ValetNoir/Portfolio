@@ -1,0 +1,29 @@
+function Chunk() {
+  this.blocks;
+  this.mesh;
+
+  this.generateBlocks = (chunkOffX, chunkOffY, chunkOffZ, noise) => {
+    console.log("generating chunk at", chunkOffX, chunkOffY, chunkOffZ);
+    let xoff = chunkOffX * CHUNK_SIZE * NOISE_INCREMENT;
+    this.blocks = [];
+    for(let i = 0; i < CHUNK_SIZE; i++) {
+      let yoff = chunkOffY * CHUNK_SIZE * NOISE_INCREMENT;
+      this.blocks[i] = [];
+      for(let j = 0; j < CHUNK_SIZE; j++) {
+        let zoff = chunkOffZ * CHUNK_SIZE * NOISE_INCREMENT;
+        this.blocks[i][j] = [];
+        for(let k = 0; k < CHUNK_SIZE; k++) {
+          let value = noise.get(xoff, yoff, zoff);
+          // let a = VERTICAL_FADE / (10 - (j + chunkOffY * CHUNK_SIZE));
+          // a = (Number.isNaN(a))? 0.5 : a;
+          // a = (!Number.isFinite(a))? 0 : a;
+          // if( a > 0.5 || a < -0.5) console.log(a, j);
+          this.blocks[i][j][k] = (value - 0.5);
+          zoff += NOISE_INCREMENT;
+        }
+        yoff += NOISE_INCREMENT;
+      }
+      xoff += NOISE_INCREMENT;
+    }
+  }
+}

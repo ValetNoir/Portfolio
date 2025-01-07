@@ -14,29 +14,42 @@
       border-radius: .5em;
       border: 1px solid black;
     }
-    .card {
+    .card, .display {
       border-radius: .5em;
       padding: .5em;
       border: 1px solid black;
       margin: .5em 0 .5em 0;
     }
     .image {
-      height: 10em;
       float: right;
     }
     .image img {
       margin-left: .5em;
-      height: 100%;
+      height: 10em;
+    }
+    .display {
+      columns: 20em auto;
+      column-gap: .5em;
+    }
+    .display img, .display video {
+      border-radius: .5em;
+      border: 1px solid black;
+      width: 100%;
+      margin-bottom: .25em;
+      image-rendering: crisp-edges;
     }
   </style>
-  <script></script>
 </head>
 <body>
   <i>This page is best viewed on a computer.</i>
 
-  <h1>Portfolio</h1>
+  <h1>About me</h1>
 
   <p>Hey, Valet here ! <br><br> I am a JavaScript developper aspiring to become one day a game creator / developper, no matter what it takes to get there :) ! I spent most of the last (7, ouch) years building engine code, but I think I'm finally ready to start making games.</p>
+  
+  <hr>
+
+  <h1>Portfolio</h1>
 
   <p>This is a collection of little projects and experiments that I made over the years. It is very incomplete, but time has destroyed most of my work, so I'll glady take what remains :D</p>
 
@@ -49,11 +62,11 @@
   <div class="card">
     <b>Robby Bobby the Robot - GTMK Gam Jam 2023</b> - <i>July 2023</i>
     <div class="image">
-      <a href="gtmk2023/banniere.png"><img src="gtmk2023/banniere.png"></a>
+      <a href="prog/gtmk2023/banniere.png"><img src="gtmk2023/banniere.png"></a>
     </div>
     <p>Out of the dozen of game jam I entered, this one is the only one I succesfully completed. And it's for a good reason, I wouldn't have made it without my buddy Arkonny / Foxrox ! What an amazing experience this was. The them e was "Role Reversed", so we decided that the player would control the enemies, which turned out in a pretty janky, but fun game ! Also, as the only coder, I decided to use the very niche "Lobster Programming Language", as I wanted to learn it for a long time and thought this was the perfect occasion. It was.</p>
     
-    <a target="_blank" href="https://valetnoir.itch.io/rbtrvstevc">Play me on itch.io !</a> <br>
+    <a target="_blank" href="prog/https://valetnoir.itch.io/rbtrvstevc">Play me on itch.io !</a> <br>
     
     <p>
       <u>Controls :</u> <br>
@@ -71,11 +84,11 @@
   <div class="card">
     <b>Paint Clone</b> - <i>April 2023</i>
     <div class="image">
-      <a href="adqsdzqsdzqsdzq/image.png"><img src="adqsdzqsdzqsdzq/image.png"></a>
+      <a href="prog/adqsdzqsdzqsdzq/image.png"><img src="adqsdzqsdzqsdzq/image.png"></a>
     </div>
     <p>This project started from the doodle of a UI I drew out of boredom. And then I coded it. Some features don't really work, but I've managed to draw quite a lot of things with it !</p>
     
-    <a target="_blank" href="adqsdzqsdzqsdzq/index.html">Play me in the browser !</a> <br>
+    <a target="_blank" href="prog/adqsdzqsdzqsdzq/index.html">Play me in the browser !</a> <br>
     
     <p>
       <u>Controls :</u> <br>
@@ -91,12 +104,12 @@
   <div class="card">
     <b>CPU 3D Renderer</b> - <i>November 2022</i>
     <div class="image">
-      <a href="clean/Capture.PNG"><img src="clean/Capture.PNG"></a>
-      <a href="clean/image.png"><img src="clean/image.png"></a>
+      <a href="prog/clean/Capture.PNG"><img src="clean/Capture.PNG"></a>
+      <a href="prog/clean/image.png"><img src="clean/image.png"></a>
     </div>
     <p>After watching a video from javidx9 on his console 3D renderer, I decided to try my hand (and math !) at one threaded 3D graphics. It didn't went that badly in my opinion. This one is really broken and laggy, I'm not gonna lie. But I'm still proud of the achievement.</p>
     
-    <a target="_blank" href="clean/index.html">Play me in the browser !</a> <br>
+    <a target="_blank" href="prog/clean/index.html">Play me in the browser !</a> <br>
     
     <p>
       <u>Controls :</u> <br>
@@ -116,11 +129,11 @@
   <div class="card">
     <b>Xelov - a limited voxel editor</b> - <i>August 2022</i>
     <div class="image">
-      <a href="xelov/Capture.PNG"><img src="xelov/Capture.PNG"></a>
+      <a href="prog/xelov/Capture.PNG"><img src="xelov/Capture.PNG"></a>
     </div>
     <p>In 2021 I joined Gabe Rundlett's voxel centered community, and as a result, a year later, I couldn't resist making my own voxel thinghy. So here it is, a little voxel something (although technically not cubic voxel, it stills count for me as it is rendering a 3D grid volume). I was strongly inspired by Sebastian Lague a few years prior.</p>
     
-    <a target="_blank" href="xelov/index.html">Play me in the browser !</a> <br>
+    <a target="_blank" href="prog/xelov/index.html">Play me in the browser !</a> <br>
     
     <p>
       <u>Controls :</u> <br>
@@ -141,8 +154,8 @@
   <div class="card">
     <b>Micronation Mapper Discord Bot</b> - <i>November 2021</i>
     <div class="image">
-      <a href="MicroNation/5syr8i.gif"><img src="MicroNation/5syr8i.gif"></a>
-      <a href="MicroNation/discord.PNG"><img src="MicroNation/discord.PNG"></a>
+      <a href="prog/MicroNation/5syr8i.gif"><img src="MicroNation/5syr8i.gif"></a>
+      <a href="prog/MicroNation/discord.PNG"><img src="MicroNation/discord.PNG"></a>
     </div>
     <p>
       This project, while not being very technical, has a special place in my heart. It dates back from the microcountry social experiment directed by the french youtubers DirtyBiology and Fouloscopie, in which I took part and joined la Forêt Abyssale, which turned out to be full of amazing people I am so grateful I had the pleasure to met and spend time with. The goal of my project was to map where the people of the discord were on a map, as they joined the discord over time. I then turned this program generated map into a little gif. Each little green dot that you see appearing on that map represent a person. A member of this beautiful communauty. Almost brings me to tear when I think too much about it. And then, when everyone had joined, I transformed the mapper bot into a casino minigame bot, which was also pretty fun !
@@ -156,11 +169,11 @@
   <div class="card">
     <b>Chess</b> - <i>February 2021</i>
     <div class="image">
-      <a href="chess/Capture.PNG"><img src="chess/Capture.PNG"></a>
+      <a href="prog/chess/Capture.PNG"><img src="chess/Capture.PNG"></a>
     </div>
     <p>This my second Javascript project the first Javascript project I did fully without a tutorial ! Please keep in mind that you are looking at a prototype made in less than 3 days by a 13 years old. It lacks the "en passant" move, checks, and a proper (console-less) endscreen. Local only of course. And it lacks a grid pattern, what a shame</p>
     
-    <a target="_blank" href="chess/index.html">Play me in the browser !</a> <br>
+    <a target="_blank" href="prog/chess/index.html">Play me in the browser !</a> <br>
     
     <p>
       <u>Controls :</u> <br>
@@ -175,11 +188,11 @@
   <div class="card">
     <b>Snake</b> - <i>January 2021</i>
     <div class="image">
-      <a href="jeu/Capture.PNG"><img src="jeu/Capture.PNG"></a>
+      <a href="prog/jeu/Capture.PNG"><img src="jeu/Capture.PNG"></a>
     </div>
     <p>My first ever Jascript/HTML/CSS project, which quickstarted my journey with those 3. I almost copied line by line a speedcoding video, but then tweaked a few things to make it my own. I couldn't find the version where I added menu though, it's pretty sad.</p>
     
-    <a target="_blank" href="jeu/game.html">Play me in the browser !</a> <br>
+    <a target="_blank" href="prog/jeu/game.html">Play me in the browser !</a> <br>
     
     <p>
       <u>Controls :</u> <br>
@@ -194,6 +207,52 @@
   <u><h3>Invisible and lost projects</h3></u>
 
   <p>I did many engine side projects, like small feature demos, utilizing the Web's many APIs, to make multiplayer networking interfaces, online chats and chatrooms, interfacing with gamepads, midi instruments, your phone's XR input devices, reading QR codes, custom OS for custom hardware, custom programming languages, and many more. Sadly, of those projects almost all can't be shown, simply because they don't work on a static HTML page like this one, or because you, the reader, would need special equipment. Also, I made some Lobster console minigame projects and the UI language extension I developped for the language, which due to the nature of the console and the niche nature of lobster, is difficult to compile to the web. As this is what it is, I compiled some videos of those projects.</p>
+
+  <hr>
+
+  <u><h2>2d Art</h2></u>
+
+  <u><h3>Animation</h3></u>
+
+  <div class="display">
+    <a href="2d/animation3.mp4"><video src="2d/animation3.mp4" autoplay loop muted></a>
+    <a href="2d/background2.mp4"><video src="2d/background2.mp4" autoplay loop muted></a>
+    <a href="2d/background5.mp4"><video src="2d/background5.mp4" autoplay loop muted></a>
+    <a href="2d/day1.mp4"><video src="2d/day1.mp4" autoplay loop muted></a>
+    <a href="2d/day2.mp4"><video src="2d/day2.mp4" autoplay loop muted></a>
+    <a href="2d/day3.mp4"><video src="2d/day3.mp4" autoplay loop muted></a>
+    <a href="2d/day4.mp4"><video src="2d/day4.mp4" autoplay loop muted></a>
+    <a href="2d/4.gif"><img src="2d/4.gif"></a>
+    <a href="2d/day5.mp4"><video src="2d/day5.mp4" autoplay loop muted></a>
+    <a href="2d/goblin.gif"><img src="2d/goblin.gif"></a>
+    <a href="2d/oeuf.gif"><img src="2d/oeuf.gif"></a>
+    <a href="2d/2.gif"><img src="2d/2.gif"></a>
+    <a href="2d/Yodo.gif"><img src="2d/Yodo.gif"></a>
+    <!-- <a href="2d/day6.mp4"><video src="2d/day6.mp4" autoplay loop muted></a> -->
+  </div>
+
+  <u><h3>Drawings</h3></u>
+
+  <div class="display">
+    <a href="2d/_(edètuyfjk.png"><img src="2d/_(edètuyfjk.png"></a>
+    <a href="2d/1_1.png"><img src="2d/1_1.png"></a>
+    <a href="2d/1.png"><img src="2d/1.png"></a>
+    <a href="2d/2.png"><img src="2d/2.png"></a>
+    <!-- <a href="2d/2_2.png"><img src="2d/2_2.png"></a> -->
+    <a href="2d/5.png"><img src="2d/5.png"></a>
+    <a href="2d/6.png"><img src="2d/6.png"></a>
+    <a href="2d/0012.png"><img src="2d/0012.png"></a>
+    <a href="2d/0013.png"><img src="2d/0013.png"></a>
+    <a href="2d/0020.png"><img src="2d/0020.png"></a>
+    <a href="2d/0022.png"><img src="2d/0022.png"></a>
+    <a href="2d/0024.png"><img src="2d/0024.png"></a>
+    <!-- <a href="2d/0028.png"><img src="2d/0028.png"></a> -->
+    <a href="2d/20200419_194412.jpg"><img src="2d/20200419_194412.jpg"></a>
+    <a href="2d/20200620_180021.jpg"><img src="2d/20200620_180021.jpg"></a>
+    <a href="2d/A.png"><img src="2d/A.png"></a>
+    <a href="2d/A0002.png"><img src="2d/A0002.png"></a>
+    <a href="2d/A0003.png"><img src="2d/A0003.png"></a>
+  </div>
 
 </body>
 </html>

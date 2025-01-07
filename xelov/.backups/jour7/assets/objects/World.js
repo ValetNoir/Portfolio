@@ -1,0 +1,186 @@
+function World(seed, isLerped) {
+  this.noise = new perlinNoise3d();
+  this.noise.noiseSeed(seed);
+  this.useLerp = isLerped;
+  this.chunks;
+  // this.loadedChunks = {};
+
+  this.generateChunks = (xl, yl, zl) => {
+    this.chunks = [];
+    for(let i = 0; i < zl; i++) {
+      this.chunks[i] = [];
+      for(let j = 0; j < yl; j++) {
+        this.chunks[i][j] = [];
+        for(let k = 0; k < zl; k++) {
+          this.generateChunk(i, j, k);
+        }
+      }
+    }
+    for(let i = 0; i < zl; i++) {
+      for(let j = 0; j < yl; j++) {
+        for(let k = 0; k < zl; k++) {
+          this.makeChunkMesh(i, j, k);
+        }
+      }
+    }
+  }
+
+  this.generateChunk = (x, y, z) => {
+    this.chunks[x][y][z] = new Chunk();
+    this.chunks[x][y][z].generateBlocks(
+      CHUNK_SIZE, CHUNK_SIZE, CHUNK_SIZE, // chunk size // I know, very usefull comment
+      1 / CHUNK_SIZE, // noise increment
+      x, y, z, // chunk coordinates
+      this.noise // just read the name of the variable you stupid
+    );
+  }
+
+  this.generateMesh = (x, y, z) => {
+    // let map = this.chunks[x][y][z].blocks;
+    let map = [];
+    for(let i = 0; i < CHUNK_SIZE + 1; i++) {
+      map[i] = [];
+      for(let j = 0; j < CHUNK_SIZE + 1; j++) {
+        map[i][j] = [];
+      }
+    }
+
+    let x_good = (x + 1) < WORLD_SIZE;
+    let y_good = (y + 1) < WORLD_SIZE;
+    let z_good = (z + 1) < WORLD_SIZE;
+
+    // this.chunks[x][y][z].blocks;
+    for(let i = 0; i < CHUNK_SIZE; i++) {
+      for(let j = 0; j < CHUNK_SIZE; j++) {
+        for(let k = 0; k < CHUNK_SIZE; k++) {
+          map[i][j][k] = this.chunks[x][y][z].blocks[i][j][k];
+        }
+      }
+    }
+    // this.chunks[x + 1][y][z].blocks;
+    if(x_good){
+      for(let i = 0; i < CHUNK_SIZE; i++) {
+        for(let j = 0; j < CHUNK_SIZE; j++) {
+          map[CHUNK_SIZE][i][j] = this.chunks[x + 1][y][z].blocks[0][i][j];
+        }
+      }
+    } else {
+      for(let i = 0; i < CHUNK_SIZE; i++) {
+        for(let j = 0; j < CHUNK_SIZE; j++) {
+          map[CHUNK_SIZE][i][j] = -0.5;
+        }
+      }
+    }
+    // this.chunks[x][y][z + 1].blocks;
+    if(z_good){
+      for(let i = 0; i < CHUNK_SIZE; i++) {
+        for(let j = 0; j < CHUNK_SIZE; j++) {
+          map[i][j][CHUNK_SIZE] = this.chunks[x][y][z + 1].blocks[i][j][0];
+        }
+      }
+    } else {
+      for(let i = 0; i < CHUNK_SIZE; i++) {
+        for(let j = 0; j < CHUNK_SIZE; j++) {
+          map[i][j][CHUNK_SIZE] = -0.5;
+        }
+      }
+    }
+    // this.chunks[x][y + 1][z].blocks;
+    if(y_good){
+      for(let i = 0; i < CHUNK_SIZE; i++) {
+        for(let j = 0; j < CHUNK_SIZE; j++) {
+          map[i][CHUNK_SIZE][j] = this.chunks[x][y + 1][z].blocks[i][0][j];
+        }
+      }
+    } else {
+      for(let i = 0; i < CHUNK_SIZE; i++) {
+        for(let j = 0; j < CHUNK_SIZE; j++) {
+          map[i][CHUNK_SIZE][j] = -0.5;
+        }
+      }
+    }
+    // this.chunks[x + 1][y + 1][z].blocks;
+    if(x_good && y_good){
+      for(let i = 0; i < CHUNK_SIZE; i++) {
+        map[CHUNK_SIZE][CHUNK_SIZE][i] = this.chunks[x + 1][y + 1][z].blocks[0][0][i];
+      }
+    } else {
+      for(let i = 0; i < CHUNK_SIZE; i++) {
+        map[CHUNK_SIZE][CHUNK_SIZE][i] = -0.5;
+      }
+    }
+    // this.chunks[x][y + 1][z + 1].blocks;
+    if(y_good && z_good){
+      for(let i = 0; i < CHUNK_SIZE; i++) {
+        map[i][CHUNK_SIZE][CHUNK_SIZE] = this.chunks[x][y + 1][z + 1].blocks[i][0][0];
+      }
+    } else {
+      for(let i = 0; i < CHUNK_SIZE; i++) {
+        map[i][CHUNK_SIZE][CHUNK_SIZE] = -0.5;
+      }
+    }
+    // this.chunks[x + 1][y][z + 1].blocks;
+    if(x_good && z_good){
+      for(let i = 0; i < CHUNK_SIZE; i++) {
+        map[CHUNK_SIZE][i][CHUNK_SIZE] = this.chunks[x + 1][y][z + 1].blocks[0][i][0];
+      }
+    } else {
+      for(let i = 0; i < CHUNK_SIZE; i++) {
+        map[CHUNK_SIZE][i][CHUNK_SIZE] = -0.5;
+      }
+    }
+    // this.chunks[x + 1][y + 1][z + 1].blocks;
+    if(x_good && y_good && z_good){
+      map[CHUNK_SIZE][CHUNK_SIZE][CHUNK_SIZE] = this.chunks[x + 1][y + 1][z + 1].blocks[0][0][0];
+    } else {
+      map[CHUNK_SIZE][CHUNK_SIZE][CHUNK_SIZE] = -0.5;
+    }
+    
+    this.chunks[x][y][z].mesh = generateMarchingCubesMesh(map, this.useLerp);
+    this.chunks[x][y][z].mesh.position.set(x * CHUNK_SIZE, y * CHUNK_SIZE, z * CHUNK_SIZE);
+  }
+
+  this.makeChunkMesh = (x, y, z) => {
+    this.deleteChunkMesh(x, y, z);
+    this.generateMesh(x, y, z);
+    this.addChunkMesh(x, y, z);
+  }
+
+  this.addChunkMesh = (x, y, z) => {
+    let key = `${x},${y},${z}`;
+    this.chunks[x][y][z].mesh.name = key;
+    scene.add(this.chunks[x][y][z].mesh);
+  }
+
+  this.deleteChunkMesh = (x, y, z) => {
+    let key = `${x},${y},${z}`;
+
+    let object = scene.getObjectByName(key);
+    if(!object) return;
+
+    object.geometry.dispose();
+    object.material.dispose();
+    scene.remove(object);
+  }
+
+  this.brush = (worldX, worldY, worldZ, brush) => {
+    let chunkX = Math.floor(worldX / CHUNK_SIZE);
+    let chunkY = Math.floor(worldY / CHUNK_SIZE);
+    let chunkZ = Math.floor(worldZ / CHUNK_SIZE);
+    let blockX = Math.floor(worldX % CHUNK_SIZE);
+    let blockY = Math.floor(worldY % CHUNK_SIZE);
+    let blockZ = Math.floor(worldZ % CHUNK_SIZE);
+
+    this.chunks[chunkX][chunkY][chunkZ].blocks[blockX][blockY][blockZ] += brush.center;
+    if(this.chunks[chunkX][chunkY][chunkZ].blocks[blockX][blockY][blockZ] > 0.5) this.chunks[chunkX][chunkY][chunkZ].blocks[blockX][blockY][blockZ] = 0.5;
+    if(this.chunks[chunkX][chunkY][chunkZ].blocks[blockX][blockY][blockZ] < -0.5) this.chunks[chunkX][chunkY][chunkZ].blocks[blockX][blockY][blockZ] = -0.5;
+    
+    this.makeChunkMesh(chunkX, chunkY, chunkZ);
+    if(blockX == (CHUNK_SIZE - 1) && (chunkX + 1) < WORLD_SIZE) this.makeChunkMesh(chunkX + 1, chunkY, chunkZ);
+    if(blockY == (CHUNK_SIZE - 1) && (chunkY + 1) < WORLD_SIZE) this.makeChunkMesh(chunkX, chunkY + 1, chunkZ);
+    if(blockZ == (CHUNK_SIZE - 1) && (chunkZ + 1) < WORLD_SIZE) this.makeChunkMesh(chunkX, chunkY, chunkZ + 1);
+    if(blockX == 0 && (chunkX - 1) > -1) this.makeChunkMesh(chunkX - 1, chunkY, chunkZ);
+    if(blockY == 0 && (chunkY - 1) > -1) this.makeChunkMesh(chunkX, chunkY - 1, chunkZ);
+    if(blockZ == 0 && (chunkZ - 1) > -1) this.makeChunkMesh(chunkX, chunkY, chunkZ - 1);
+  }
+}

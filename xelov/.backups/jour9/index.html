@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>⛾ xolev</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+
+    #info {
+    	position: absolute;
+    	top: 10px;
+    	width: 100%;
+    	text-align: center;
+    	z-index: 100;
+    	display: block;
+
+      color: white;
+      font-size: small;
+    }
+  </style>
+</head>
+<body>
+  <!-- libs -->
+  <script src="libs/three.js"></script>
+  <script src="libs/cannon.min.js"></script>
+  <script src="libs/BufferGeometryUtils.js"></script>
+  <script src="libs/OrbitControls.js"></script>
+  <script src="libs/perlin-noise-3d.min.js"></script>
+  <!-- shaders  -->
+  <script src="assets/shaders/terrain/vertexShader.glsl" id="terrain/vertexShader" type="x-shader/x-vertex"></script>
+  <script src="assets/shaders/terrain/fragmentShader.glsl" id="terrain/fragmentShader" type="x-shader/x-fragment"></script>
+  <!-- basics -->
+  <script src="assets/basics/setup.js"></script>
+  <script src="assets/basics/raycaster.js"></script>
+  <script src="assets/basics/marching-cubes.js"></script>
+  <!-- objects -->
+  <script src="assets/objects/MouseHandler.js"></script>
+  <script src="assets/objects/KeyHandler.js"></script>
+  <script src="assets/objects/Chunk.js"></script>
+  <script src="assets/objects/World.js"></script>
+
+  <script>
+  // ADD MATERIAL
+  // if player is grounded => no gravity applied to player
+  // camera and player model rotates : each leg => to the normal of the face under the origin of the model
+  //                                   entire body => to the average of the normals of each legs
+  // inverse kinematics for the legs 
+  'use strict';
+  
+  let start = Date.now();
+  let myWorld = new World(Math.PI);
+  myWorld.generateChunks(WORLD_SIZE, WORLD_SIZE, WORLD_SIZE);
+  console.log((Date.now() - start) / 1000 + "s")
+
+  let mouse4ClickHandler = new MouseHandler(
+    3, // mouse 4 click
+    () => { // onMouseDown
+    }, () => { // onMouseHold
+      let x = mouseX;
+      let y = mouseY;
+      let pos = clickToWorld(x, y);
+      if(pos.x && pos.y && pos.z) myWorld.brush(pos.x, pos.y, pos.z, 30, -0.05);
+    }, () => { // onMouseUp
+    }
+  );
+
+  let mouse5ClickHandler = new MouseHandler(
+    4, // mouse 5 click
+    () => { // onMouseDown
+    }, () => { // onMouseHold
+      let x = mouseX;
+      let y = mouseY;
+      let pos = clickToWorld(x, y);
+      if(pos.x && pos.y && pos.z) myWorld.brush(pos.x, pos.y, pos.z, 30, 0.05);
+    }, () => { // onMouseUp
+    }
+  );
+
+  let aClickHandler = new KeyHandler(
+    "a", // a key
+    () => { // onKeyDown
+    }, () => { // onKeyHold
+      let x = mouseX;
+      let y = mouseY;
+      let pos = clickToWorld(x, y);
+      if(pos.x && pos.y && pos.z) myWorld.brush(pos.x, pos.y, pos.z, 30, -0.05);
+    }, () => { // onKeUp
+    }
+  );
+
+  let bClickHandler = new KeyHandler(
+    "b", // b key
+    () => { // onKeyDown
+    }, () => { // onKeyHold
+      let x = mouseX;
+      let y = mouseY;
+      let pos = clickToWorld(x, y);
+      if(pos.x && pos.y && pos.z) myWorld.brush(pos.x, pos.y, pos.z, 30, 0.05);
+    }, () => { // onKeUp
+    }
+  );
+  
+  start = Date.now();
+  draw();
+  console.log((Date.now() - start) / 1000 + "s")
+  </script>
+
+  <div id="canvas"></div>
+
+  <div id="info">
+    <p>xolev, valet's very bad failure at making a voxel engine</p>
+      Left Click : orbit <br>
+      Scroll : zoom <br>
+      Right Click : move <br>
+      Mouse 4 / Key A : dig <br>
+      Mouse 5 / Key B : add matter <br>
+  </div>
+</body>
+</html>

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Synth</title>
+    <style>
+        .tall {
+            height: calc(100vh - 16px);
+        }
+
+        .vflex {
+            display: flex;
+            flex-direction: column;
+
+            overflow-y: auto;
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
+        .vflex::-webkit-scrollbar {
+            display: none;
+        }
+
+        .vflex * {
+            flex: 1
+        }
+    </style>
+</head>
+<body>
+    <button id="play">play</button>
+    <script src="main.js"></script>
+</body>
+</html>

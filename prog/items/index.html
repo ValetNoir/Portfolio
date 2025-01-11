@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Deuscord</title>
+</head>
+<body>
+you're id is:
+<span id="id_span">ERROR: can't get id</span>
+<button onclick="copy_id_to_clipboard()">📋</button>
+<br>
+<input onclick="this.value = ''" type="text" id="input_id" placeholder="input peer id here">
+<button onclick="connect()">CONNECT</button>
+<br>
+
+
+
+<!-- https://peerjs.com/ -->
+<script src="https://unpkg.com/peerjs@1.5.2/dist/peerjs.min.js"></script>
+<script>
+let peer = new Peer()
+let audioCtx = new AudioContext()
+
+peer.on("open", identifier => {
+  document.getElementById("id_span").innerHTML = identifier
+})
+
+peer.on("connection", connection => {
+  connection.on("data", data => {
+    console.log(data)
+  })
+})
+
+peer.on("call", call => {
+  navigator.mediaDevices.getUserMedia({video: false, audio: true})
+  .then(stream => {
+    call.answer(stream)
+    call.on("stream", remoteStream => {
+      set_display(call, remoteStream)
+    });
+  })
+})
+
+let currentlyShowed = new Set() 
+function set_display(mediaConnection, mediaStream) {
+  if(currentlyShowed.has(mediaConnection.peer)) return document.createElement("audio")
+  currentlyShowed.add(mediaConnection.peer)
+  
+  let track = audioCtx.createMediaStreamSource(mediaStream)
+  let muteNode = audioCtx.createGain()
+  let volumeNode = audioCtx.createGain()
+  track.connect(volumeNode).connect(muteNode).connect(audioCtx.destination)
+
+  let mute = document.createElement("button")
+  mute.innerHTML = "🔈"
+  mute.onclick = () => {
+    if(muteNode.gain.value == 0) {
+      muteNode.gain.value = 1
+      mute.innerHTML = "🔈"
+    } else {
+      muteNode.gain.value = 0
+      mute.innerHTML = "🔇"
+    }
+  }
+  
+  let volumeControl = document.createElement("input")
+  volumeControl.type = "range"
+  volumeControl.min = 0
+  volumeControl.max = 3
+  volumeControl.value = volumeNode.gain.value
+  volumeControl.step = 0.01
+  volumeControl.oninput = () => { volumeNode.gain.setValueAtTime(volumeControl.value, audioCtx.currentTime) }
+  
+  let disconnect = document.createElement("button")
+  disconnect.innerHTML = "DISCONNECT"
+  disconnect.onclick = () => {
+    mediaConnection.close()
+  }
+
+  let div = document.createElement("div")
+  div.append(mediaConnection.peer, " : ", mute, volumeControl, disconnect)
+  document.body.appendChild(div)
+  
+  mediaConnection.on("close", () => {
+    currentlyShowed.delete(mediaConnection.peer)
+    document.body.removeChild(div)
+  })
+}
+
+function copy_id_to_clipboard() {
+  navigator.clipboard.writeText(peer.id)
+}
+
+function connect() {
+  let connection = peer.connect(document.getElementById("input_id").value)
+
+  connection.on("open", () => {
+    navigator.mediaDevices.getUserMedia({video: false, audio: true})
+    .then(stream => {
+      let call = peer.call(connection.peer, stream)
+      call.on("stream", remoteStream => {
+        set_display(call, remoteStream)
+      })
+      call.on("close", () => connection.close())
+    })
+  })
+}
+</script>
+</body>
+</html>

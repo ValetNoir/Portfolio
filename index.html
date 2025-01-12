@@ -13,6 +13,9 @@
       text-align: justify;  
       text-justify: auto;
     }
+    .centered {
+      text-align: center;
+    }
     .card small {
       padding: 0 .5em 0 .5em;
       border-radius: .5em;
@@ -62,19 +65,18 @@
 </head>
 <body>
   <header>
-    <div>
-      SOCIALS
-    </div>
-    <div>
-      <a href="#about">About me</a>
-      <a href="#portfolio">Portfolio</a>
-      <small><a href="#programming">Programming</a></small>
-      <small><a href="#drawings">Drawings</a></small>
-      <small><a href="#pixel">Pixel art</a></small>
-    </div>
+    <a href="#about">About me</a>
+    <a href="#portfolio">Portfolio</a>
+    <small><a href="#programming">Programming</a></small>
+    <small><a href="#drawings">Drawings</a></small>
+    <small><a href="#pixel">Pixel art</a></small>
   </header>
   <article>
     <i>This page is best viewed on a computer.</i>
+
+    <div class="centered">
+      Socials
+    </div>
     
     <div id="about">
       <h1>About me</h1>
@@ -94,9 +96,8 @@
       <h1>Portfolio</h1>
     
       <p>This is a collection of little projects and experiments that I made over the years.</p>
-      <!-- It is very incomplete, but time has destroyed most of my work, so I'll glady take what remains :D -->
     
-      <i>Most of the demos only work on a computer.</i>
+      <p><i>Most of the demos only work on a computer.</i></p>
 
       <hr>
   
@@ -110,7 +111,7 @@
           <div class="image">
             <a href="prog/gtmk2023/banniere.png"><img src="prog/gtmk2023/banniere.png"></a>
           </div>
-          <p>Out of the dozen of game jam I entered, this one is the only one I succesfully completed. And it's for a good reason, I wouldn't have made it without my buddy Arkonny / Foxrox (who did the music and the most of the art) ! What an amazing experience this was. The jam's theme was "Role Reversed", so we decided that the player would control the enemies, which turned out in a pretty janky, but fun game ! Also, as the only coder, I decided to use the very niche "Lobster Programming Language", as I wanted to learn it for a long time and thought this was the perfect occasion. It was.</p>
+          <p>Made with my friend Arkonny, who did the music and the most of the art ! As the jam's theme was "Role Reversed", we decided that the player would control the enemies, which turned out in a pretty janky but fun game ! Also, as the only coder, I decided to use the very niche "Lobster Programming Language", as I wanted to learn it for a long time.</p>
           
           <p><a target="_blank" href="https://valetnoir.itch.io/rbtrvstevc">Play me on itch.io !</a></p>
           
@@ -118,6 +119,7 @@
             <u>Controls :</u> <br>
             Q/D : move around <br>
             Z/S : switch controlle enemy <br>
+            <br>
             Protip : Be sure to take the power ups that randomly spawn on the map, they're very helpful ! And you want to PROTECT the blue thing in the middle, by SUICIDING the enemy you control onto the sword !<br>
           </p>
       
@@ -153,7 +155,7 @@
             <a href="prog/clean/Capture.PNG"><img src="prog/clean/Capture.PNG"></a>
             <!-- <a href="prog/clean/image.png"><img src="prog/clean/image.png"></a> -->
           </div>
-          <p>After watching a video from javidx9 on his console 3D renderer, I decided to try my hand (and math !) at one threaded 3D graphics. It didn't went that badly in my opinion. This one is really broken and laggy, I'm not gonna lie. But I'm still proud of the achievement.</p>
+          <p>After watching a video from javidx9 on his console 3D renderer, I decided to try my hand (and math !) at one threaded 3D graphics. It didn't went that badly in my opinion. This one is really broken and laggy, I'm not going to lie. But I'm still proud of the achievement.</p>
           
           <p><a target="_blank" href="prog/clean/index.html">Play me in the browser !</a></p>
           
@@ -177,7 +179,7 @@
           <div class="image">
             <a href="prog/xelov/Capture.PNG"><img src="prog/xelov/Capture.PNG"></a>
           </div>
-          <p>In 2021 I joined Gabe Rundlett's voxel centered community, and as a result, a year later, I couldn't resist making my own voxel thinghy. So here it is, a little voxel something (although technically not cubic voxel, it stills count for me as it is rendering a 3D grid volume). I was strongly inspired by Sebastian Lague a few years prior.</p>
+          <p>In 2021 I joined Gabe Rundlett's voxel centered community, and as a result, a year later, I couldn't resist making my own voxel thing. So here it is, a little voxel something (not cubic voxel, but stills renders 3D grid volume). I was strongly inspired by Sebastian Lague.</p>
           
           <p><a target="_blank" href="prog/xelov/index.html">Play me in the browser !</a></p>
           
@@ -211,7 +213,7 @@
 
         <div class="card">
           <b>Basic sound synthesis</b> - <i>Novembre 2023</i>
-          <p>In this small demo, you can play notes with buttons. There is a full keyboard on the page. Try holding the click down and hovering over everything, it makes funny sounds</p>
+          <p>In this small demo, you can play notes with buttons. Try holding the click down and hovering over everything, it makes funny sounds.</p>
           
           <p><a target="_blank" href="prog/js_synth/index.html">Play me in the browser !</a></p>
       
@@ -226,7 +228,7 @@
           <div class="image">
             <a href="prog/beequest/Capture.PNG"><img src="prog/beequest/Capture.PNG"></a>
           </div>
-          <p>This project started as a joke around the fact that my mother is a beekeeper and was supposed to be a bee-themed city planner. Developpement stopped after 2 days. You can select some bees (very tweaked boids) and move them around though, isn't that cool ?</p>
+          <p>This project started as a joke about my bee-keeping mother. Developpement stopped after 2 days. You can select some bees (very tweaked boids) and move them around though, isn't that cool ?</p>
           
           <p><a target="_blank" href="prog/beequest/index.html">Play me in the browser !</a></p>
           
@@ -243,7 +245,7 @@
 
         <div class="card">
           <b>Quadratic function visualizer</b> - <i>September 2023</i>
-          <p>This is a very small school-related math project, in which you can tinker with a quadratic curve. It was made in the span of a few hours and never touched again.</p>
+          <p>This is a very small school-related math project, in which you can tinker with a quadratic curve.</p>
           
           <p><a target="_blank" href="https://valetnoir.github.io/Polynome2ndDegre/">Play me in the browser !</a></p>
       
@@ -257,7 +259,7 @@
           <div class="image">
             <a href="prog/chess/Capture.PNG"><img src="prog/chess/Capture.PNG"></a>
           </div>
-          <p>This my second Javascript project the first Javascript project I did fully without a tutorial ! Please keep in mind that you are looking at a prototype made in less than 3 days by a 13 years old. It lacks the "en passant" move, checks, and a proper (console-less) endscreen. Local only of course. And it lacks a grid pattern, what a shame.</p>
+          <p>This my second Javascript project and the first I did fully without a tutorial ! It lacks the "en passant" move, checks, and a proper (console-less) endscreen. Local only of course. And it lacks a grid pattern, what a shame.</p>
           
           <p><a target="_blank" href="prog/chess/index.html">Play me in the browser !</a></p>
           
@@ -292,14 +294,13 @@
       
         <u><h3>Invisible and lost projects</h3></u>
       
-        <p>I did many engine side projects, like small feature demos, utilizing the Web's many APIs, to make multiplayer networking interfaces, online chats and chatrooms, interfacing with gamepads, midi instruments, your phone's XR input devices, reading QR codes, custom OS for custom hardware, custom programming languages, 3D object generation, and many more. Sadly, of those projects almost none can be shown, either because they don't work on a static HTML page like this one, or because you, the reader, would need special equipment. Also, I made some Lobster console minigame projects and the UI language extension I developped for the language, which due to the nature of the console and the niche nature of lobster, is difficult to compile to the web. As this is what it is, I compiled some videos of those lost medias.</p>
-      
-        <!-- online, gamepad, shaders -->
+        <p>I did many small demos utilizing the Web's many APIs. Sadly, of those projects almost none can be shown, either because they don't work on a static HTML page, or because they require special equipment.</p>
+        <p><i>Unshowned exemples include online chatrooms; interfacing with midi instruments; smartphone XR; reading QR codes; custom OS, hardware, programming languages; 3D object generation; console minigames; a Lobster UI language extension and many more.</i></p>
         
         <div class="card">
           <b>Gamepad input demo</b> - <i>Mai 2023</i>
           <div class="image">
-            <a href="prog/online/trim.gif"><img src="prog/online/trim.gif"></a>
+            <a href="prog/manette/cool.gif"><img src="prog/manette/cool.gif"></a>
           </div>
           <p></p>
       
@@ -309,12 +310,12 @@
         </div>
       
         <div class="card">
-          <b>Micronation Mapper Discord Bot</b> - <i>November 2021</i>
+          <b>Mapper Discord Bot</b> - <i>November 2021</i>
           <div class="image">
             <a href="prog/MicroNation/5syr8i.gif"><img src="prog/MicroNation/5syr8i.gif"></a>
             <a href="prog/MicroNation/discord.PNG"><img src="prog/MicroNation/discord.PNG"></a>
           </div>
-          <p>This project, while not being very technical, has a special place in my heart. It dates back from the microcountry social experiment directed by the french youtubers DirtyBiology and Fouloscopie, in which I took part and joined la Forêt Abyssale, which turned out to be full of amazing people I am so grateful I had the pleasure to met and spend time with. The goal of my project was to map where the people of the discord were on a map, as they joined the discord over time. I then turned this program generated map into a little gif. Each little green dot that you see appearing on that map represent a person. A member of this beautiful communauty. Almost brings me to tear when I think too much about it. And then, when everyone had joined, I transformed the mapper bot into a casino minigame bot, which was also pretty fun !</p>
+          <p>Made for the Dibistan micronation social experiment. The bot was meant to map the discord people's locations, as they joined a discord over time, which was then turned into a gif. Each little green dot represents an active member. I then turned it into casino minigame bot.</p>
       
           <small>Discord bot API</small>
           <small>JS</small>
@@ -324,7 +325,7 @@
         <div class="card">
           <b>Online topdown demo</b> - <i>October 2021</i>
           <div class="image">
-            <a href="prog/manette/cool.gif"><img src="prog/manette/cool.gif"></a>
+            <a href="prog/online/trim.gif"><img src="prog/online/trim.gif"></a>
           </div>
           <p></p>
       

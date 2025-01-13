@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Mesureur</title>
+</head>
+<body>
+  <input type="file" id="file"><br>
+  ruler : <input type="number" id="scale"> cm<br>
+  area : <span id="area"></span> cm²<br>
+  <canvas></canvas>
+  <script>
+
+let fileinput = document.getElementById("file")
+let scaleinput = document.getElementById("scale")
+let areaspan = document.getElementById("area")
+
+fileinput.oninput = () => {
+  let url = URL.createObjectURL(fileinput.files[0])
+
+  canvas.style.backgroundImage = "url(" + url + ")"
+
+  let image = new Image()
+  image.src = url
+  image.onload = () => {
+    points = []
+
+    canvas.width = image.width
+    canvas.height = image.height
+
+    scaleX = canvas.width / canvas.offsetWidth
+    scaleY = canvas.height / canvas.offsetHeight
+    
+    setInterval(draw, 100)
+  }
+}
+
+let canvas = document.querySelector("canvas")
+let ctx = canvas.getContext("2d")
+canvas.style.width = "100%"
+canvas.style.height = "100%"
+canvas.style.backgroundSize = "100%"
+
+let scaleX = 0, scaleY = 0
+
+let mouseX = 0, mouseY = 0
+canvas.onmousemove = e => {
+  mouseX = e.offsetX * scaleX, mouseY = e.offsetY * scaleY
+}
+
+let points = []
+canvas.onmousedown = e => {
+  points.push([mouseX, mouseY])
+}
+
+function shoelace(points) {
+  let area = 0
+  
+  let j = points.length - 1
+  for(let i = 0; i < points.length; i++) {
+    area += (points[j][0] + points[i][0]) * (points[j][1] - points[i][1]);
+    j = i
+  }
+
+  return Math.abs(area / 2)
+} 
+  
+let crossWidth = 1, crossHeight = 10
+function fillCross(x, y) {
+  ctx.fillRect(x - crossWidth / 2 * scaleX, y - crossHeight / 2 * scaleY, crossWidth * scaleX, crossHeight * scaleY)
+  ctx.fillRect(x - crossHeight / 2 * scaleX, y - crossWidth / 2 * scaleY, crossHeight * scaleY, crossWidth * scaleX)
+}
+
+let scaleR
+function draw() {
+  ctx.globalAlpha = 1
+  ctx.clearRect(0, 0, canvas.width, canvas.height)
+
+  ctx.fillStyle = "red"
+  fillCross(mouseX, mouseY)
+
+  ctx.fillStyle = "blue"
+  if(points[0]) { fillCross(points[0][0], points[0][1]) }
+  if(points[1]) {
+    ctx.strokeStyle = "blue"
+    ctx.lineWidth = 5
+    fillCross(points[1][0], points[1][1])
+    ctx.beginPath()
+    ctx.moveTo(points[0][0], points[0][1])
+    ctx.lineTo(points[1][0], points[1][1])
+    ctx.stroke()
+
+    let dx = points[0][0] - points[1][0]
+    let dy = points[0][1] - points[1][1]
+    let dist = Math.sqrt(dx*dx + dy*dy)
+
+    scaleR = dist / scaleinput.value
+  }
+  if(points.length > 2) {
+    ctx.fillStyle = "green"
+    ctx.beginPath()
+    ctx.moveTo(points[2][0], points[2][1])
+    for(let i = 2; i < points.length; i++) {
+      let point = points[i]
+      fillCross(point[0], point[1])
+      ctx.lineTo(point[0], point[1])
+    }
+    ctx.globalAlpha = 0.5
+    ctx.fill()
+
+    areaspan.innerHTML = shoelace(points.filter((v, i) => i > 1).map(v => [v[0] / scaleR, v[1] / scaleR]))
+  }
+}
+
+  </script>
+</body>
+</html>

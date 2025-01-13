@@ -20,6 +20,12 @@
     body, html {
       margin : 0
     }
+    h1, h2, h3 {
+      text-align: center;
+      background-color: black;
+      color: white;
+      border-radius: .5em;
+    }
     article {
       padding: .5em;
     }
@@ -29,6 +35,7 @@
     }
     #socials {
       text-align: center;
+      margin: 1em 0 1em 0;
     }
     #socials img {
       border-radius: 100%;
@@ -38,18 +45,23 @@
       margin: 0 .5em 0 .5em;
     }
     #welcome {
+      padding: 1em 0 1em 0;
       text-align: center;
       font: 2em "pixel";
+      width: 100%;
+      background-color: black;
+      color: white;
     }
-    #welcome div {
+    #welcome span {
       font: 5em "3D";
+      font-size: min(5em, 18vw);
     }
     .card small {
       padding: 0 .5em 0 .5em;
       border-radius: .5em;
       border: 1px solid black;
     }
-    .card, .display {
+    .card {
       border-radius: .5em;
       padding: .5em;
       border: 1px solid black;
@@ -79,11 +91,11 @@
     .header {
       position: sticky;
       top: 0;
-      background-color: white;
       height: 2em;
       text-align: center;
     }
     .header a {
+      background-color: white;
       padding: .5em;
       border: 1px solid black;
     }
@@ -97,31 +109,32 @@
     <a href="#drawings">Drawings</a>
     <a href="#pixel">Pixel art</a>
   </div>
+  <div>
+    <p style="text-align: center;"><i>This page is best viewed on a computer.</i></p>
+
+    <div id="socials">
+      <a target="_blank" href="https://valetnoir.itch.io/"><img src="assets/itch.bmp"></a>
+      <a target="_blank" href="https://github.com/ValetNoir"><img src="assets/github.bmp"></a>
+      <a target="_blank" href="mailto:gaspardhavenith@gmail.com"><img src="assets/mail.bmp"></a>
+      <a target="_blank" href="https://discord.gg/vBuD72B555"><img src="assets/discord.bmp"></a>
+    </div>
+  
+    <div id="welcome">Welcome to<br><span>GASPARD HAVENITH</span>'s<br>Portfolio</div>
+  </div>
   <article>
     <div id="about">
-      <div id="socials">
-        <a target="_blank" href="https://valetnoir.itch.io/"><img src="assets/itch.bmp"></a>
-        <a target="_blank" href="https://github.com/ValetNoir"><img src="assets/github.bmp"></a>
-        <a target="_blank" href="mailto:gaspardhavenith@gmail.com"><img src="assets/mail.bmp"></a>
-        <a target="_blank" href="https://discord.gg/vBuD72B555"><img src="assets/discord.bmp"></a>
-      </div>
-
-      <h1 id="welcome">Welcome to <div>GASPARD HAVENITH</div> 's portfolio !</h1>
-
-      <p><i>This page is best viewed on a computer.</i></p>
-      
       <h1>About me</h1>
     
-      <p>Hey, Valet here !</p>
+      <p>Hey, Gaspard (aka Valet) here !</p>
   
-      <p>I am a JavaScript developper aspiring to become one day a game creator / developper, no matter what it takes to get there :) ! I spent most of the last 7 years making various game or tool protoypes, and I feel ready to take it to the next level.</p>
+      <p>I am a JavaScript developper aspiring to become one day a game creator / developper, no matter what it takes to get there >:) ! I spent most of the last 7 years making various game or tool protoypes and experiments, and I feel ready to take it to the next level.</p>
       
-      <p>I've always had a drive towards creating things, especially stories and games. During my younger years, I tinkered with command blocks to make minecraft maps (little dungeon adventures), persued paper roleplay games in which I created many maps and systems (especially for fights, economics and puzzles), made a lot of little games on scratch... VOIR TEL</p>
+      <p><b>Making games ?</b> - I've been playing the Wii and Minecraft for as long as I can remember, but I've also always had a drive towards creating things, especially stories and games. During my younger years, I tinkered with command blocks and java to make minecraft maps & plugins (little dungeon adventures), made a lot of little games on scratch (the biggest of which a wiiplay's tanks clone), persued paper roleplay games in which I created many maps and systems (especially for fights, economics and puzzles), either alone or with friends that I shared my nerdy interests. I've always been inspired by the Youtube devlog scene.</p>
       
+      <p><b>Other interests ?</b> - Art is what makes my heart bump, yes (video games especially), but I'm interested in many things ! I'm a curious person, and much of a jack of all trade. I love animation, drawing, scenographie, and writting stories & poetry. I enjoy urbanism, politics, biology, mathematics, philosophy, physics, and systems in general. I'm also very much into cooking, treading the boards, chess, board games, biking, running, hiking & camping, photography, singing and dancing, playing the ukulele, crocheting clothes, and most importantly, making friends.</p>
+
       <p><b>What about 2024 ?</b> - Yes, there is one-year gap in my portfolio. I got some little health-related setbacks which made it very hard to get the focus I need when programming, and I lost access to my computer for an very extended period of time, so I persued other hobbies that don't requiere it. It happens I guess ¯\_(ツ)_/¯ .</p>
     </div>
-
-    <hr>
   
     <div id="portfolio">
       <h1>Portfolio</h1>
@@ -129,13 +142,11 @@
       <p>This is a collection of little projects and experiments that I made over the years.</p>
     
       <p><i>Most of the demos only work on a computer.</i></p>
-
-      <hr>
   
       <div id="programming">
-        <u><h2>Programming</h2></u>
+        <h2>Programming</h2>
       
-        <u><h3>Medium-size projects</h3></u>
+        <h3>Medium-size projects</h3>
       
         <div class="card">
           <b>Robby Bobby the Robot - GTMK Gam Jam 2023</b> - <i>July 2023</i>
@@ -210,7 +221,7 @@
           <div class="image">
             <a href="prog/xelov/Capture.PNG"><img src="prog/xelov/Capture.PNG"></a>
           </div>
-          <p>In 2021 I joined Gabe Rundlett's voxel centered community, and as a result, a year later, I couldn't resist making my own voxel thing. So here it is, a little voxel something (not cubic voxel, but stills renders 3D grid volume). I was strongly inspired by Sebastian Lague.</p>
+          <p>In 2021 I joined Gabe Rundlett's voxel centered community, and as a result, a year later, I couldn't resist making my own voxel thing. So here it is, a little voxel something (not cubic voxel, but stills renders 3D grid volume). I was inspired by Sebastian Lague.</p>
           
           <p><a target="_blank" href="prog/xelov/index.html">Play me in the browser !</a></p>
           
@@ -228,8 +239,30 @@
           <small>Solo work</small>
         </div>
         
-        <u><h3>Small projects</h3></u>
+        <h3>Small projects</h3>
     
+        <div class="card">
+          <b>School science fair project utilities</b> - <i>Mai 2024</i>
+          <div class="image">
+            <a href="prog/es/cookie.PNG"><img src="prog/es/cookie.PNG"></a>
+          </div>
+          <p>Helps getting the area of baked and unbaked cookie as part of my science faire project, but can work for maps or any kind of picture, really. Also made the grapher from scratch.</p>
+
+          <p>
+            <a target="_blank" href="prog/es/mesureur.html">Play me in the browser !</a>
+            <a target="_blank" href="prog/es/plotteur.html">Look at me in the browser !</a>
+          </p>
+
+          <p>
+            <u>Controls :</u> <br>
+            Select or drop image, use first two click to select scale reference, then click to add point to the polygone.
+          </p>
+
+          <small>made from scratch</small>
+          <small>JS/HTML/CSS</small>
+          <small>Solo work</small>
+        </div>
+
         <div class="card">
           <b>Online voice call</b> - <i>January 2024</i>
           <p>In this small demo, you can voice call another web client using its ID. In another version of this project camera and screenshare was also available, but I sadly don't find it anymore.</p>
@@ -265,7 +298,7 @@
           
           <p>
             <u>Controls :</u> <br>
-            Left Click (Held) : select bees <br>
+            Left Click (Held and move cursor) : select bees <br>
             Left Click: release bees <br>
           </p>
       
@@ -323,11 +356,23 @@
           <small>Solo work</small>
         </div>
       
-        <u><h3>Invisible and lost projects</h3></u>
+        <h3>Invisible and lost projects</h3>
       
         <p>I did many small demos utilizing the Web's many APIs. Sadly, of those projects almost none can be shown, either because they don't work on a static HTML page, or because they require special equipment.</p>
         <p><i>Unshowned exemples include online chatrooms; interfacing with midi instruments; smartphone XR; reading QR codes; custom OS, hardware, programming languages; 3D object generation; console minigames; a Lobster UI language extension and many more.</i></p>
-        
+
+        <div class="card">
+          <b>Artsey.io custom keyboard PCB</b> - <i>Mai 2024</i>
+          <div class="image">
+            <a href="prog/artsey/image.png"><img src="prog/artsey/image.png"></a>
+          </div>
+          <p>This project then turned into a long long long journey through datasheets to make an ULP LPAW (ESP32 at one point) oneboard microcomputer.</p>
+      
+          <small>EasyEDA</small>
+          <small>lcsc.com & JLCPCB</small>
+          <small>CH32V003</small>
+        </div>
+
         <div class="card">
           <b>Gamepad input demo</b> - <i>Mai 2023</i>
           <div class="image">
@@ -364,15 +409,25 @@
           <small>NodeJS</small>
           <small>Solo work</small>
         </div>
-        
-        <hr>
+
+        <div class="card">
+          <b>Modified Conway's game of life clone</b> - <i>Juillet 2021</i>
+          <div class="image">
+            <a href="prog/gol/conway.png"><img src="prog/gol/conway.png"></a>
+          </div>
+          <p></p>
+      
+          <small>made from scratch</small>
+          <small>JS/HTML/CSS</small>
+          <small>Solo work</small>
+        </div>
   
       </div>
     
       <div id="drawings">
-        <u><h2>Drawings</h2></u>
+        <h2>Drawings</h2>
       
-        <u><h3>Animation</h3></u>
+        <h3>Animation</h3>
       
         <div class="display">
           <a href="2d/animation3.mp4"><video src="2d/animation3.mp4" autoplay loop muted></a>
@@ -386,7 +441,7 @@
           <!-- <a href="2d/day6.mp4"><video src="2d/day6.mp4" autoplay loop muted></a> -->
         </div>
       
-        <u><h3>Static</h3></u>
+        <h3>Static</h3>
       
         <div class="display">
           <a href="2d/0fjk.png"><img src="2d/0fjk.png"></a>
@@ -431,9 +486,9 @@
       </div>
     
       <div id="pixel">
-        <u><h2>Pixel art</h2></u>
+        <h2>Pixel art</h2>
       
-        <u><h3>Animation</h3></u>
+        <h3>Animation</h3>
       
         <div class="display pixelated">
           <a href="2d/4.gif"><img src="2d/4.gif"></a>
@@ -445,7 +500,7 @@
           <a href="2d/zadazz.gif"><img src="2d/zadazz.gif"></a>
         </div>
       
-        <u><h3>Static</h3></u>
+        <h3>Static</h3>
       
         <div class="display pixelated">
           <a href="2d/1_1.png"><img src="2d/1_1.png"></a>

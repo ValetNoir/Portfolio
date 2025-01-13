@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Plotteur</title>
+</head>
+<body>
+  <script>
+let canvas = new OffscreenCanvas(250, 250)
+let ctx = canvas.getContext("2d")
+
+let aireCoefValues = [
+  [  0, 1.55],
+  [  0, 1.47],
+  [  0, 1.48],
+  [  0, 1.59],
+  [2.5, 1.34],
+  [2.5, 1.61],
+  [2.5, 1.57],
+  [2.5, 1.66],
+  [  5, 1.43],
+  [  5, 1.49],
+  [  5, 1.54],
+  [  5, 1.54],
+  [7.5, 1.84],
+  [7.5, 1.76],
+  [7.5, 2.11],
+  [7.5, 1.89],
+  [ 10, 1.75],
+  [ 10, 1.87],
+  [ 10, 2.20],
+  [ 10, 2.13],
+]
+
+let aireCoefAvg = [
+  [  0, 1.52],
+  [2.5, 1.54],
+  [  5, 1.50],
+  [7.5, 1.90],
+  [ 10, 1.99],
+]
+
+let aireDiffValues = [
+  [  0,  5.67],
+  [  0,  6.23],
+  [  0,  6.07],
+  [  0,  7.70],
+  [2.5,  5.13],
+  [2.5,  6.23],
+  [2.5,  6.77],
+  [2.5,  7.70],
+  [  5,  5.65],
+  [  5,  7.04],
+  [  5,  6.68],
+  [  5,  7.14],
+  [7.5,  9.42],
+  [7.5,  9.54],
+  [7.5, 13.07],
+  [7.5, 10.96],
+  [ 10,  9.13],
+  [ 10, 10.22],
+  [ 10, 17.01],
+  [ 10, 12.99],
+]
+
+let aireDiffAvg = [
+  [  0,  6.42],
+  [2.5,  6.46],
+  [  5,  6.63],
+  [7.5, 10.75],
+  [ 10, 12.34],
+]
+
+let hauteurCoefValues = [
+  [  0, 1.21],
+  [  0, 1.06],
+  [  0, 1.16],
+  [  0, 1.07],
+  [2.5, 1.10],
+  [2.5, 1.32],
+  [2.5, 1.58],
+  [2.5, 1.33],
+  [  5, 1.33],
+  [  5, 1.39],
+  [  5, 1.70],
+  [  5, 1.42],
+  [7.5, 1.37],
+  [7.5, 1.66],
+  [7.5, 1.90],
+  [7.5, 1.35],
+  [ 10, 1.55],
+  [ 10, 1.53],
+  [ 10, 1.88],
+  [ 10, 1.75],
+]
+
+let hauteurCoefAvg = [
+  [  0, 1.13],
+  [2.5, 1.33],
+  [  5, 1.46],
+  [7.5, 1.57],
+  [ 10, 1.68],
+]
+
+let hauteurDiffValues = [
+  [  0, 0.45],
+  [  0, 0.10],
+  [  0, 0.35],
+  [  0, 0.15],
+  [2.5, 0.20],
+  [2.5, 0.70],
+  [2.5, 1.10],
+  [2.5, 0.60],
+  [  5, 0.65],
+  [  5, 0.70],
+  [  5, 1.30],
+  [  5, 0.80],
+  [7.5, 0.75],
+  [7.5, 1.05],
+  [7.5, 1.30],
+  [7.5, 0.65],
+  [ 10, 1.05],
+  [ 10, 1.00],
+  [ 10, 1.15],
+  [ 10, 1.35],
+]
+
+let hauteurDiffAvg = [
+  [  0, 0.26],
+  [2.5, 0.65],
+  [  5, 0.86],
+  [7.5, 0.94],
+  [ 10, 1.14],
+]
+
+function fillCross(x, y, crossSize) {
+  ctx.beginPath()
+  ctx.moveTo(x - crossSize/2, y)
+  ctx.lineTo(x + crossSize/2, y)
+  ctx.moveTo(x, y - crossSize/2)
+  ctx.lineTo(x, y + crossSize/2)
+  ctx.stroke()
+}
+
+function getScale(points, padding) {
+  let axemargin = padding * 2.5
+  let maxX = -Infinity, minX = Infinity, maxY = -Infinity, minY = Infinity
+  for(let i = 0; i < points.length; i++) {
+    let point = points[i]
+    if(point[0] > maxX) maxX = point[0]
+    if(point[0] < minX) minX = point[0]
+    if(point[1] > maxY) maxY = point[1]
+    if(point[1] < minY) minY = point[1]
+  }
+  let scaleX = (canvas.width - padding * 2 - axemargin) / (maxX - minX)
+  let scaleY = (canvas.height - padding * 2 - axemargin) / (maxY - minY)
+
+  return { axemargin: axemargin, padding: padding, maxX: maxX, minX: minX, maxY: maxY, minY: minY, scaleX: scaleX, scaleY: scaleY }
+}
+
+function leastSquares(points) {
+  var sumX = 0, sumY = 0, sumXY = 0, sumXX = 0
+
+  for(let i = 0; i < points.length; i++) {
+    let x = points[i][0], y = points[i][1]
+    sumX += x
+    sumY += y
+    sumXX += x * x
+    sumXY += x * y
+  }
+  
+  let a = (points.length * sumXY - sumX * sumY) / (points.length * sumXX - sumX * sumX)
+  let b = sumY / points.length - a * sumX / points.length
+
+  return [a, b]
+}
+
+function convertCoordinates(point, scale) {
+  return [
+    (point[0] - scale.minX) * scale.scaleX + scale.padding + scale.axemargin,
+    canvas.height - ((point[1] - scale.minY) * scale.scaleY + scale.padding + scale.axemargin),
+  ]
+}
+
+function plot(points, scale) {
+  for(let i = 0; i < points.length; i++) {
+    let point = convertCoordinates(points[i], scale)
+    fillCross(point[0], point[1], scale.padding * 0.75)
+  }
+}
+
+function line(points, scale) {
+  let droite = leastSquares(points)
+  let A = convertCoordinates([scale.minX, droite[0] * scale.minX + droite[1]], scale)
+  let B = convertCoordinates([scale.maxX, droite[0] * scale.maxX + droite[1]], scale)
+  ctx.beginPath()
+  ctx.moveTo(A[0], A[1])
+  ctx.lineTo(B[0], B[1])
+  ctx.stroke()
+}
+
+function axes(labelX, labelY, scale) {
+  let origin = [scale.axemargin, canvas.height - scale.axemargin]
+  let up = [scale.axemargin, 0]
+  let right = [canvas.width, canvas.height - scale.axemargin]
+  let u = scale.padding / 2
+  ctx.beginPath()
+
+  ctx.moveTo(up[0] - u, up[1] + u)
+  ctx.lineTo(up[0], up[1])
+  ctx.moveTo(up[0] + u, up[1] + u)
+  ctx.lineTo(up[0], up[1])
+  ctx.lineTo(origin[0], origin[1])
+
+  ctx.moveTo(right[0] - u, right[1] - u)
+  ctx.lineTo(right[0], right[1])
+  ctx.moveTo(right[0] - u, right[1] + u)
+  ctx.lineTo(right[0], right[1])
+  ctx.lineTo(origin[0], origin[1])
+
+  ctx.moveTo(up[0] - u, up[1] + scale.padding)
+  ctx.lineTo(up[0] + u, up[1] + scale.padding)
+
+  ctx.moveTo(origin[0] - u, origin[1] - scale.padding)
+  ctx.lineTo(origin[0] + u, origin[1] - scale.padding)
+
+  ctx.moveTo(origin[0] + scale.padding, origin[1] - u)
+  ctx.lineTo(origin[0] + scale.padding, origin[1] + u)
+
+  ctx.moveTo(right[0] - scale.padding, right[1] - u)
+  ctx.lineTo(right[0] - scale.padding, right[1] + u)
+
+  ctx.stroke()
+
+  ctx.fillStyle = "black"
+  ctx.textAlign = "center"
+  ctx.textBaseline = "top"
+  ctx.fillText(scale.minX, origin[0] + scale.padding, origin[1] + scale.padding)
+  ctx.fillText(scale.maxX, right[0] - scale.padding, right[1] + scale.padding)
+  ctx.fillText(labelX, (origin[0] + right[0]) / 2, (origin[1] + right[1]) / 2 + scale.padding)
+
+  ctx.textBaseline = "bottom"
+
+  ctx.save()
+  ctx.translate(origin[0] - scale.padding, origin[1] - scale.padding)
+  ctx.rotate(-Math.PI / 2)
+  ctx.fillText(scale.minY, 0, 0)
+  ctx.restore()
+
+  ctx.save()
+  ctx.translate(up[0] - scale.padding, up[1] + scale.padding)
+  ctx.rotate(-Math.PI / 2)
+  ctx.fillText(scale.maxY, 0, 0)
+  ctx.restore()
+
+  ctx.save()
+  ctx.translate((origin[0] + up[0]) / 2 - scale.padding, (origin[1] + up[1]) / 2)
+  ctx.rotate(-Math.PI / 2)
+  ctx.fillText(labelY, 0, 0)
+  ctx.restore()
+}
+
+function graph(values, avgs, labelX, labelY) {
+  ctx.fillStyle = "white"
+  ctx.fillRect(0, 0, canvas.width, canvas.height)
+
+  let scale = getScale(values, 10)
+  ctx.strokeStyle = "grey"
+  ctx.lineWidth = 0.5
+  plot(values, scale)
+  ctx.strokeStyle = "red"
+  ctx.lineWidth = 1
+  plot(avgs, scale)
+  ctx.lineWidth = 1
+  line(values, scale)
+
+  ctx.strokeStyle = "black"
+  ctx.lineWidth = 1
+
+  axes(labelX, labelY, scale)
+
+  let bitmap = canvas.transferToImageBitmap()
+  let image = document.createElement("canvas")
+  let imagectx = image.getContext("bitmaprenderer")
+  imagectx.transferFromImageBitmap(bitmap)
+  bitmap.close()
+  document.body.append(image)
+}
+
+graph(aireCoefValues, aireCoefAvg, "Beurre ajouté (g)", "Coef. Étalement (±0.01)")
+graph(aireDiffValues, aireDiffAvg, "Beurre ajouté (g)", "Diff. Aire (cm²) (±0.01)")
+graph(hauteurCoefValues, hauteurCoefAvg, "Beurre ajouté (g)", "Coef. Aplatissement (±0.05)")
+graph(hauteurDiffValues, hauteurDiffAvg, "Beurre ajouté (g)", "Diff. Hauteur (cm) (±0.05)")
+
+  </script>
+</body>
+</html>

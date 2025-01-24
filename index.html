@@ -5,596 +5,112 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Portfolio</title>
-  <style>
-    @font-face {
-      font-family: "pixel";
-      src: url("assets/PixelScriptRegular.ttf");
-    }
-    @font-face {
-      font-family: "3D";
-      src: url("assets/3D.ttf");
-    }
-    article {
-      margin: .5em;
-    }
-    p {
-      text-align: justify;  
-      text-justify: auto;
-    }
-    #socials {
-      text-align: center;
-      margin: 1em 0 1em 0;
-    }
-    #socials img {
-      border-radius: 100%;
-      height: 3em;
-    }
-    #socials a {
-      margin: 0 .5em 0 .5em;
-    }
-    #welcome {
-      padding: 1em 0 1em 0;
-      text-align: center;
-      font: 2em "pixel";
-      width: 100%;
-      background-color: black;
-      color: white;
-    }
-    #welcome span {
-      font: 5em "3D";
-      font-size: min(5em, 18vw);
-    }
-    .header {
-      position: sticky;
-      top: 0;
-      height: 2em;
-      text-align: center;
-    }
-    .header a {
-      background-color: white;
-      padding: .5em;
-      border: 1px solid black;
-    }
-    .image {
-      float: right;
-    }
-    .image img, .image video {
-      margin-left: .5em;
-      height: 10em;
-    }
-    html {
-      scroll-padding-top: 2em;
-    }
-    body, html {
-      margin : 0;
-      padding: 0;
-    }
-    h1, h2, h3 {
-      text-align: center;
-      background-color: black;
-      color: white;
-      border-radius: .5em;
-    }
-    .card small {
-      padding: 0 .5em 0 .5em;
-      border-radius: .5em;
-      border: 1px solid black;
-    }
-    .card {
-      border-radius: .5em;
-      padding: .5em;
-      border: 1px solid black;
-      margin: .5em 0 .5em 0;
-      overflow: hidden;
-    }
-    .display {
-      columns: 19em auto;
-      column-gap: .5em;
-    }
-    .display img, .display video {
-      border-radius: .5em;
-      border: 1px solid black;
-      width: 100%;
-      margin-bottom: .25em;
-    }
-    .pixelated {
-      image-rendering: pixelated;
-    }
-  </style>
+  <link rel="stylesheet" href="style.css">
 </head>
-<body>
-  <div class="header">
-    <a href="#about">About me</a>
-    <!-- <a href="#portfolio">Portfolio</a> -->
-    <a href="#programming">Programming</a>
-    <a href="#drawings">Drawings</a>
-    <a href="#pixel">Pixel art</a>
+<body style="height: 100vh; overflow: hidden;">
+  <div class="slideshow">
+    <section>
+      <div class="header">
+        <a href="./index.html">Portfolio</a>
+        <a href="./about.html">About me</a>
+        <a href="./long.html">Programming</a>
+        <a href="./images.html">2D Arts</a>
+      </div>
+      <p style="text-align: center;"><i>This site is best viewed on a computer.</i></p>
+  
+      <div id="socials">
+        <a target="_blank" href="https://valetnoir.itch.io/"><img src="assets/itch.bmp"></a>
+        <a target="_blank" href="https://github.com/ValetNoir"><img src="assets/github.bmp"></a>
+        <a target="_blank" href="mailto:gaspardhavenith@gmail.com"><img src="assets/mail.bmp"></a>
+        <a target="_blank" href="https://discord.gg/vBuD72B555"><img src="assets/discord.bmp"></a>
+      </div>
+    
+      <div id="welcome">
+        Welcome to<br><span id="w1">GASPARD HAVENITH</span>'s<br>Portfolio<br>
+
+        <span id="w2">Here is a list of some projects I made 👇</span>
+      </div>
+    </section>
+    
+    <section class="slide">
+      <br><br>
+      <div class="centered"><i>July 2023</i></div>
+      <h1><b>Robby Bobby the Robot</b></h1>
+      <div class="image">
+        <a href="prog/gtmk2023/banniere.png"><img src="prog/gtmk2023/banniere.png"></a>
+      </div>
+      <p>Made with my friend Arkonny, who did the music and the most of the art, as a submission for the GMTK 2023 game jam. As the theme was "Role Reversed", we decided that the player would control the enemies. As the only coder, I decided to use the very niche "Lobster Programming Language", as I wanted to learn it for a long time.</p>
+      
+      <p><a target="_blank" href="https://valetnoir.itch.io/rbtrvstevc">Play me on itch.io !</a></p>
+  
+      <small>GTMK 2023</small>
+      <small>no external libraries</small>
+      <small>Lobster</small>
+      <small>Team work</small>
+    </section>
+  
+    <section class="slide">
+      <br><br>
+      <div class="centered"><i>April 2023</i></div>
+      <h1><b>Paint Clone</b></h1>
+      <div class="image">
+        <a href="prog/adqsdzqsdzqsdzq/image.png"><img src="prog/adqsdzqsdzqsdzq/image.png"></a>
+      </div>
+      <p>This project started from the doodle of a UI I drew out of boredom. And then I coded it. Some features don't really work, but I've managed to draw quite a lot of things with it !</p>
+      
+      <p><a target="_blank" href="prog/adqsdzqsdzqsdzq/index.html">Play me in the browser !</a></p>
+  
+      <small>no external libraries</small>
+      <small>JS/HTML/CSS</small>
+      <small>Solo work</small>
+    </section>
+  
+    <section class="slide">
+      <br><br>
+      <div class="centered"><i>November 2022</i></div>
+      <h1><b>CPU 3D Renderer</b></h1>
+      <div class="image">
+        <a href="prog/clean/Capture.PNG"><img src="prog/clean/Capture.PNG"></a>
+        <!-- <a href="prog/clean/image.png"><img src="prog/clean/image.png"></a> -->
+      </div>
+      <p>After watching a video from javidx9 on his console 3D renderer, I decided to try my hand (and math !) at one threaded 3D graphics. It didn't went that badly in my opinion. This one is really broken and laggy, I'm not going to lie. But I'm still proud of the achievement.</p>
+      
+      <p><a target="_blank" href="prog/clean/index.html">Play me in the browser !</a></p>
+  
+      <small>no external libraries</small>
+      <small>JS/HTML/CSS</small>
+      <small>Solo work</small>
+    </section>
+  
+    <section class="slide">
+      <br><br>
+      <div class="centered"><i>August 2022</i></div>
+      <h1><b>Xelov - a limited voxel editor</b></h1>
+      <div class="image">
+        <a href="prog/xelov/Capture.PNG"><img src="prog/xelov/Capture.PNG"></a>
+      </div>
+      <p>In 2021 I joined Gabe Rundlett's voxel centered community, and as a result, a year later, I couldn't resist making my own voxel thing. So here it is, a little voxel something (not cubic voxel, but stills renders 3D grid volume). I was inspired by Sebastian Lague.</p>
+      
+      <p><a target="_blank" href="prog/xelov/index.html">Play me in the browser !</a></p>
+  
+      <small>ThreeJS</small>
+      <small>Voxels</small>
+      <small>Solo work</small>
+    </section>
+    
+    <section class="more">
+      <p class="centered">
+        <i>See more...</i><br><br>
+        <a href="./about.html">About me</a><br>
+        <a href="./long.html">Programming</a><br>
+        <a href="./images.html">2D Arts</a><br>
+
+        <br><br>
+
+        <i>Encountered technologies and softwares:<br><br>
+        HTML, CSS, JS, Java, C#, C, C++, Lua, Lobster, x86, Blender, Blockbench, Godot, Unity, Autodesk Sketchbook, Piskel, Paint, Trello, Parsec, GLFW, SFML, SDL, Visual Studio, VS Code, IntelliJ, Fork, EasyEDA, and many more...</i>
+      </p>
+    </section>
   </div>
-  <div>
-    <p style="text-align: center;"><i>This page is best viewed on a computer.</i></p>
-
-    <div id="socials">
-      <a target="_blank" href="https://valetnoir.itch.io/"><img src="assets/itch.bmp"></a>
-      <a target="_blank" href="https://github.com/ValetNoir"><img src="assets/github.bmp"></a>
-      <a target="_blank" href="mailto:gaspardhavenith@gmail.com"><img src="assets/mail.bmp"></a>
-      <a target="_blank" href="https://discord.gg/vBuD72B555"><img src="assets/discord.bmp"></a>
-    </div>
-  
-    <div id="welcome">Welcome to<br><span>GASPARD HAVENITH</span>'s<br>Portfolio</div>
-  </div>
-  <article>
-    <div id="about">
-      <h1>About me</h1>
-    
-      <p>Hey, Gaspard (aka Valet) here !</p>
-  
-      <p>I am a JavaScript developper aspiring to become one day a game creator / developper, no matter what it takes to get there >:) ! I spent most of the last 7 years making various game or tool protoypes and experiments, and I feel ready to take it to the next level.</p>
-      
-      <p>I am 17 years old and aspiring to join the Cnam-Enjmin next year !</p>
-
-      <p><b>Making games ?</b> - I've been playing the Wii and Minecraft for as long as I can remember, but I've also always had a drive towards creating things, especially stories and games. During my younger years, I tinkered with command blocks and java to make minecraft maps & plugins (little dungeon adventures), made a lot of little games on scratch (the biggest of which a wiiplay's tanks clone), persued paper roleplay games in which I created many maps and systems (especially for fights, economics and puzzles), either alone or with friends that I shared my nerdy interests. I've always been inspired by the Youtube devlog scene.</p>
-      
-      <p><b>Other interests ?</b> - Art is what makes my heart bump, yes (video games especially), but I'm interested in many things ! I'm a curious person, and much of a jack of all trade. I love animation, drawing, scenographie, and writting stories & poetry. I enjoy urbanism, politics, biology, mathematics, philosophy, physics, and systems in general. I'm also very much into cooking, treading the boards, chess, board games, biking, running, hiking & camping, photography, singing and dancing, playing the ukulele, crocheting clothes, and most importantly, making friends.</p>
-
-      <p><b>What about 2024 ?</b> - Yes, there is one-year gap in my portfolio. I got some little health-related setbacks which made it very hard to get the focus I need when programming, and I lost access to my computer for an very extended period of time, so I persued other hobbies that don't requiere it in the meantime. It happens I guess ¯\_(ツ)_/¯ .</p>
-    </div>
-  
-    <div id="portfolio">
-      <h1>Portfolio</h1>
-    
-      <p>This is a collection of little projects and experiments that I made over the years.</p>
-    
-      <p><i>Most of the demos only work on a computer.</i></p>
-  
-      <div id="programming">
-        <h2>Programming</h2>
-      
-        <h3>Medium-size projects</h3>
-      
-        <div class="card">
-          <b>Robby Bobby the Robot - GTMK Gam Jam 2023</b> - <i>July 2023</i>
-          <div class="image">
-            <a href="prog/gtmk2023/banniere.png"><img src="prog/gtmk2023/banniere.png"></a>
-          </div>
-          <p>Made with my friend Arkonny, who did the music and the most of the art ! As the jam's theme was "Role Reversed", we decided that the player would control the enemies, which turned out in a pretty janky but fun game ! Also, as the only coder, I decided to use the very niche "Lobster Programming Language", as I wanted to learn it for a long time.</p>
-          
-          <p><a target="_blank" href="https://valetnoir.itch.io/rbtrvstevc">Play me on itch.io !</a></p>
-          
-          <p>
-            <u>Controls :</u> <br>
-            Q/D : move around <br>
-            Z/S : switch controlle enemy <br>
-            <br>
-            Protip : Be sure to take the power ups that randomly spawn on the map, they're very helpful ! And you want to PROTECT the blue thing in the middle, by SUICIDING the enemy you control onto the sword !<br>
-          </p>
-      
-          <small>GTMK 2023</small>
-          <small>no external libraries</small>
-          <small>Lobster</small>
-          <small>Team work</small>
-        </div>
-      
-        <div class="card">
-          <b>Paint Clone</b> - <i>April 2023</i>
-          <div class="image">
-            <a href="prog/adqsdzqsdzqsdzq/image.png"><img src="prog/adqsdzqsdzqsdzq/image.png"></a>
-          </div>
-          <p>This project started from the doodle of a UI I drew out of boredom. And then I coded it. Some features don't really work, but I've managed to draw quite a lot of things with it !</p>
-          
-          <p><a target="_blank" href="prog/adqsdzqsdzqsdzq/index.html">Play me in the browser !</a></p>
-          
-          <p>
-            <u>Controls :</u> <br>
-            Left mouse : use current tool, select primary color <br>
-            Right mouse : select secondary color <br>
-          </p>
-      
-          <small>no external libraries</small>
-          <small>JS/HTML/CSS</small>
-          <small>Solo work</small>
-        </div>
-      
-        <div class="card">
-          <b>CPU 3D Renderer</b> - <i>November 2022</i>
-          <div class="image">
-            <a href="prog/clean/Capture.PNG"><img src="prog/clean/Capture.PNG"></a>
-            <!-- <a href="prog/clean/image.png"><img src="prog/clean/image.png"></a> -->
-          </div>
-          <p>After watching a video from javidx9 on his console 3D renderer, I decided to try my hand (and math !) at one threaded 3D graphics. It didn't went that badly in my opinion. This one is really broken and laggy, I'm not going to lie. But I'm still proud of the achievement.</p>
-          
-          <p><a target="_blank" href="prog/clean/index.html">Play me in the browser !</a></p>
-          
-          <p>
-            <u>Controls :</u> <br>
-            Left mouse : lock cursor <br>
-            Escape : unlock cursor [IMPORTANT] <br>
-            Mouse : look around <br>
-            Z/Q/S/D : move around <br>
-            Space : go up <br>
-            Shift : go down <br>
-          </p>
-      
-          <small>no external libraries</small>
-          <small>JS/HTML/CSS</small>
-          <small>Solo work</small>
-        </div>
-      
-        <div class="card">
-          <b>Xelov - a limited voxel editor</b> - <i>August 2022</i>
-          <div class="image">
-            <a href="prog/xelov/Capture.PNG"><img src="prog/xelov/Capture.PNG"></a>
-          </div>
-          <p>In 2021 I joined Gabe Rundlett's voxel centered community, and as a result, a year later, I couldn't resist making my own voxel thing. So here it is, a little voxel something (not cubic voxel, but stills renders 3D grid volume). I was inspired by Sebastian Lague.</p>
-          
-          <p><a target="_blank" href="prog/xelov/index.html">Play me in the browser !</a></p>
-          
-          <p>
-            <u>Controls :</u> <br>
-            Left Click : orbit <br>
-            Scroll : zoom <br>
-            Right Click : move <br>
-            Mouse 4 / Key A : dig <br>
-            Mouse 5 / Key B : build <br>
-          </p>
-      
-          <small>ThreeJS</small>
-          <small>Voxels</small>
-          <small>Solo work</small>
-        </div>
-        
-        <h3>Small projects</h3>
-    
-        <div class="card">
-          <b>School science fair project utilities</b> - <i>Mai 2024</i>
-          <div class="image">
-            <a href="prog/es/cookie.PNG"><img src="prog/es/cookie.PNG"></a>
-          </div>
-          <p>Helps getting the area of baked and unbaked cookie as part of my science faire project, but can work for maps or any kind of picture, really. Also made the grapher from scratch.</p>
-
-          <p>
-            <a target="_blank" href="prog/es/mesureur.html">Play me in the browser !</a>
-            <a target="_blank" href="prog/es/plotteur.html">Look at me in the browser !</a>
-          </p>
-
-          <p>
-            <u>Controls :</u> <br>
-            Select or drop image, use first two click to select scale reference, then click to add point to the polygone.
-          </p>
-
-          <small>no external libraries</small>
-          <small>JS/HTML/CSS</small>
-          <small>Solo work</small>
-        </div>
-
-        <div class="card">
-          <b>Online voice call</b> - <i>January 2024</i>
-          <p>In this small demo, you can voice call another web client using its ID. In another version of this project camera and screenshare was also available, but I sadly don't find it anymore.</p>
-          
-          <p><a target="_blank" href="prog/items/index.html">Play me in the browser !</a></p>
-      
-          <small>no external libraries</small>
-          <small>WebRTC</small>
-          <small>JS/HTML/CSS</small>
-          <small>Solo work</small>
-        </div>
-
-        <div class="card">
-          <b>Basic sound synthesis</b> - <i>Novembre 2023</i>
-          <p>In this small demo, you can play notes with buttons. Try holding the click down and hovering over everything, it makes funny sounds.</p>
-          
-          <p><a target="_blank" href="prog/js_synth/index.html">Play me in the browser !</a></p>
-      
-          <small>no external libraries</small>
-          <small>Web Audio API</small>
-          <small>JS/HTML/CSS</small>
-          <small>Solo work</small>
-        </div>
-
-        <div class="card">
-          <b>Beequest</b> - <i>Octobre 2023</i>
-          <div class="image">
-            <a href="prog/beequest/Capture.PNG"><img src="prog/beequest/Capture.PNG"></a>
-          </div>
-          <p>This project started as a joke about my bee-keeping mother. Developpement stopped after 2 days. You can select some bees (very tweaked boids) and move them around though, isn't that cool ?</p>
-          
-          <p><a target="_blank" href="prog/beequest/index.html">Play me in the browser !</a></p>
-          
-          <p>
-            <u>Controls :</u> <br>
-            Left Click (Held and move cursor) : select bees <br>
-            Left Click: release bees <br>
-          </p>
-      
-          <small>no external libraries</small>
-          <small>JS/HTML/CSS</small>
-          <small>Solo work</small>
-        </div>
-
-        <div class="card">
-          <b>Quadratic function visualizer</b> - <i>September 2023</i>
-          <p>This is a very small school-related math project, in which you can tinker with a quadratic curve.</p>
-          
-          <p><a target="_blank" href="https://valetnoir.github.io/Polynome2ndDegre/">Play me in the browser !</a></p>
-      
-          <small>no external libraries</small>
-          <small>JS/HTML/CSS</small>
-          <small>Solo work</small>
-        </div>
-      
-        <div class="card">
-          <b>Chess</b> - <i>February 2021</i>
-          <div class="image">
-            <a href="prog/chess/Capture.PNG"><img src="prog/chess/Capture.PNG"></a>
-          </div>
-          <p>This my second Javascript project and the first I did fully without a tutorial ! It lacks the "en passant" move, checks, and a proper (console-less) endscreen. Local only of course. And it lacks a grid pattern, what a shame.</p>
-          
-          <p><a target="_blank" href="prog/chess/index.html">Play me in the browser !</a></p>
-          
-          <p>
-            <u>Controls :</u> <br>
-            Left Click : select & play <br>
-          </p>
-      
-          <small>no external libraries</small>
-          <small>JS/HTML/CSS</small>
-          <small>Solo work</small>
-        </div>
-      
-        <div class="card">
-          <b>Snake</b> - <i>January 2021</i>
-          <div class="image">
-            <a href="prog/jeu/Capture.PNG"><img src="prog/jeu/Capture.PNG"></a>
-          </div>
-          <p>My first ever Javascript/HTML/CSS project, which quickstarted my journey with those 3. I almost copied line by line a speedcoding video, but then tweaked a few things to make it my own. I couldn't find the version where I added menu though, it's pretty sad.</p>
-          
-          <p><a target="_blank" href="prog/jeu/game.html">Play me in the browser !</a></p>
-          
-          <p>
-            <u>Controls :</u> <br>
-            Arrow keys : move around <br>
-          </p>
-      
-          <small>Tutorial guided</small>
-          <small>JS/HTML/CSS</small>
-          <small>Solo work</small>
-        </div>
-      
-        <h3>Invisible and lost projects</h3>
-      
-        <p>I did many small demos utilizing the Web's many APIs. Sadly, of those projects almost none can be shown, either because they don't work on a static HTML page, or because they require special equipment.</p>
-        <p><i>Unshowned exemples include online chatrooms; interfacing with midi instruments; smartphone XR; reading QR codes; custom OS, hardware, programming languages; 3D object generation; console minigames; a Lobster UI language extension and many more.</i></p>
-
-        <div class="card">
-          <b>Artsey.io custom keyboard PCB</b> - <i>Mai 2024</i>
-          <div class="image">
-            <a href="prog/artsey/image.png"><img src="prog/artsey/image.png"></a>
-          </div>
-          <p>This project then turned into a long long long journey through datasheets to make an ULP CAT-M1 oneboard microcomputer (with an ESP32 at one point).</p>
-      
-          <small>EasyEDA</small>
-          <small>lcsc.com & JLCPCB</small>
-          <small>CH32V003</small>
-        </div>
-
-        <div class="card">
-          <b>Gamepad input demo</b> - <i>Mai 2023</i>
-          <div class="image">
-            <a href="prog/manette/cool.gif"><img src="prog/manette/cool.gif"></a>
-          </div>
-          <p></p>
-      
-          <small>no external libraries</small>
-          <small>Gamepad Web API</small>
-          <small>JS</small>
-          <small>Solo work</small>
-        </div>
-        
-        <div class="card">
-          <b>Mario maker clone</b> - <i>June 2022</i>
-          <div class="image">
-            <a href="prog/levelbuilder/7juin2022.png"><img src="prog/levelbuilder/7juin2022.png"></a>
-          </div>
-          <p>This was a level editor, and you could jump around with a character in the level you created.</p>
-
-          <small>no external libraries</small>
-          <small>JS/HTML/CSS</small>
-          <small>Solo work</small>
-        </div>
-      
-        <div class="card">
-          <b>Mapper Discord Bot</b> - <i>November 2021</i>
-          <div class="image">
-            <a href="prog/MicroNation/5syr8i.gif"><img src="prog/MicroNation/5syr8i.gif"></a>
-            <a href="prog/MicroNation/discord.PNG"><img src="prog/MicroNation/discord.PNG"></a>
-          </div>
-          <p>Made for the Dibistan micronation social experiment. The bot was meant to map the discord people's locations, as they joined a discord over time, which was then turned into a gif. Each little green dot represents an active member. I then turned it into casino minigame bot.</p>
-      
-          <small>Discord bot API</small>
-          <small>JS</small>
-          <small>Solo work</small>
-        </div>
-        
-        <div class="card">
-          <b>Online topdown demo</b> - <i>October 2021</i>
-          <div class="image">
-            <a href="prog/online/trim.gif"><img src="prog/online/trim.gif"></a>
-          </div>
-          <p></p>
-      
-          <small>Socket.IO</small>
-          <small>NodeJS</small>
-          <small>Solo work</small>
-        </div>
-
-        <div class="card">
-          <b>Elastic collision</b> - <i>September 2021</i>
-          <div class="image">
-            <a href="prog/elastic/vid.mp4"><video autoplay repeat muted src="prog/elastic/vid.mp4"></a>
-          </div>
-          <p>I even published <a href="https://www.youtube.com/watch?v=M5oltZgRpsI">another video</a> showcasing it at the time !</p>
-      
-          <small>no external libraries</small>
-          <small>JS/HTML/CSS</small>
-          <small>Solo work</small>
-        </div>
-
-        <div class="card">
-          <b>Modified Conway's game of life clone</b> - <i>July 2021</i>
-          <div class="image">
-            <a href="prog/gol/conway.png"><img src="prog/gol/conway.png"></a>
-          </div>
-          <p></p>
-      
-          <small>no external libraries</small>
-          <small>JS/HTML/CSS</small>
-          <small>Solo work</small>
-        </div>
-  
-      </div>
-    
-      <div id="drawings">
-        <h2>Drawings</h2>
-      
-        <h3>Animation</h3>
-      
-        <div class="display">
-          <a href="2d/animation3.mp4"><video src="2d/animation3.mp4" autoplay loop muted></a>
-          <a href="2d/background2.mp4"><video src="2d/background2.mp4" autoplay loop muted></a>
-          <a href="2d/background5.mp4"><video src="2d/background5.mp4" autoplay loop muted></a>
-          <a href="2d/day1.mp4"><video src="2d/day1.mp4" autoplay loop muted></a>
-          <a href="2d/day2.mp4"><video src="2d/day2.mp4" autoplay loop muted></a>
-          <a href="2d/day3.mp4"><video src="2d/day3.mp4" autoplay loop muted></a>
-          <a href="2d/day4.mp4"><video src="2d/day4.mp4" autoplay loop muted></a>
-          <a href="2d/day5.mp4"><video src="2d/day5.mp4" autoplay loop muted></a>
-          <!-- <a href="2d/day6.mp4"><video src="2d/day6.mp4" autoplay loop muted></a> -->
-        </div>
-      
-        <h3>Static</h3>
-      
-        <div class="display">
-          <a href="2d/0fjk.png"><img src="2d/0fjk.png"></a>
-          <a href="2d/0012.png"><img src="2d/0012.png"></a>
-          <a href="2d/0013.png"><img src="2d/0013.png"></a>
-          <a href="2d/0020.png"><img src="2d/0020.png"></a>
-          <a href="2d/0022.png"><img src="2d/0022.png"></a>
-          <a href="2d/0024.png"><img src="2d/0024.png"></a>
-          <!-- <a href="2d/0028.png"><img src="2d/0028.png"></a> -->
-          <a href="2d/20200419_194412.jpg"><img src="2d/20200419_194412.jpg"></a>
-          <a href="2d/20200620_180021.jpg"><img src="2d/20200620_180021.jpg"></a>
-          <a href="2d/A.png"><img src="2d/A.png"></a>
-          <a href="2d/A0002.png"><img src="2d/A0002.png"></a>
-          <a href="2d/A0003.png"><img src="2d/A0003.png"></a>
-          <a href="2d/b.png"><img src="2d/b.png"></a>
-          <a href="2d/Bagger_Vs_Troll1.png"><img src="2d/Bagger_Vs_Troll1.png"></a>
-          <a href="2d/BaggyBagger_the_HeadSlasher.png"><img src="2d/BaggyBagger_the_HeadSlasher.png"></a>
-          <a href="2d/beast.png"><img src="2d/beast.png"></a>
-          <a href="2d/bonbah.png"><img src="2d/bonbah.png"></a>
-          <a href="2d/Cat2.png"><img src="2d/Cat2.png"></a>
-          <a href="2d/dczd1.png"><img src="2d/dczd1.png"></a>
-          <a href="2d/dzdqsdz.png"><img src="2d/dzdqsdz.png"></a>
-          <a href="2d/e8fbb070dd22b05ee82dafb1a5a0d489.png"><img src="2d/e8fbb070dd22b05ee82dafb1a5a0d489.png"></a>
-          <a href="2d/edfgh.png"><img src="2d/edfgh.png"></a>
-          <a href="2d/fghj.png"><img src="2d/fghj.png"></a>
-          <a href="2d/fghjkl.png"><img src="2d/fghjkl.png"></a>
-          <a href="2d/fvbjn.png"><img src="2d/fvbjn.png"></a>
-          <a href="2d/ghjk.png"><img src="2d/ghjk.png"></a>
-          <a href="2d/ghjkl.png"><img src="2d/ghjkl.png"></a>
-          <a href="2d/Gnome3.png"><img src="2d/Gnome3.png"></a>
-          <a href="2d/iuohoihzadazdoih.png"><img src="2d/iuohoihzadazdoih.png"></a>
-          <a href="2d/mnhabit1.png"><img src="2d/mnhabit1.png"></a>
-          <a href="2d/pikakiller.png"><img src="2d/pikakiller.png"></a>
-          <a href="2d/qzdsdzqsd.png"><img src="2d/qzdsdzqsd.png"></a>
-          <a href="2d/Sans titre 2.png"><img src="2d/Sans titre 2.png"></a>
-          <a href="2d/Sans titre.png"><img src="2d/Sans titre.png"></a>
-          <a href="2d/spider.png"><img src="2d/spider.png"></a>
-          <a href="2d/turfg.png"><img src="2d/turfg.png"></a>
-          <a href="2d/unknown.png"><img src="2d/unknown.png"></a>
-          <a href="2d/uyjtfuohu.png"><img src="2d/uyjtfuohu.png"></a>
-          <a href="2d/jdr1.png"><img src="2d/jdr1.png"></a>
-          <a href="2d/jdr2.png"><img src="2d/jdr2.png"></a>
-          <a href="2d/decembre2020.bmp"><img src="2d/decembre2020.bmp"></a>
-          <a href="2d/fevrier2021.bmp"><img src="2d/fevrier2021.bmp"></a>
-          <a href="2d/mars2022_1.bmp"><img src="2d/mars2022_1.bmp"></a>
-          <a href="2d/mars2022_2.bmp"><img src="2d/mars2022_2.bmp"></a>
-        </div>
-      </div>
-    
-      <div id="pixel">
-        <h2>Pixel art</h2>
-      
-        <h3>Animation</h3>
-      
-        <div class="display pixelated">
-          <a href="2d/4.gif"><img src="2d/4.gif"></a>
-          <a href="2d/iuigpz.gif"><img src="2d/iuigpz.gif"></a>
-          <a href="2d/goblin.gif"><img src="2d/goblin.gif"></a>
-          <a href="2d/oeuf.gif"><img src="2d/oeuf.gif"></a>
-          <a href="2d/2.gif"><img src="2d/2.gif"></a>
-          <a href="2d/Yodo.gif"><img src="2d/Yodo.gif"></a>
-          <a href="2d/zadazz.gif"><img src="2d/zadazz.gif"></a>
-        </div>
-      
-        <h3>Static</h3>
-      
-        <div class="display pixelated">
-          <a href="2d/1_1.png"><img src="2d/1_1.png"></a>
-          <a href="2d/1.png"><img src="2d/1.png"></a>
-          <a href="2d/2.png"><img src="2d/2.png"></a>
-          <!-- <a href="2d/2_2.png"><img src="2d/2_2.png"></a> -->
-          <a href="2d/5.png"><img src="2d/5.png"></a>
-          <a href="2d/6.png"><img src="2d/6.png"></a>
-          <a href="2d/azdazdqfzaqssdfdzafqsdzqsd.png"><img src="2d/azdazdqfzaqssdfdzafqsdzqsd.png"></a>
-          <a href="2d/cczoiâôizah.png"><img src="2d/cczoiâôizah.png"></a>
-          <a href="2d/dazazfetfqdsd.png"><img src="2d/dazazfetfqdsd.png"></a>
-          <a href="2d/dfghjk.png"><img src="2d/dfghjk.png"></a>
-          <a href="2d/dqsdzqsdz.png"><img src="2d/dqsdzqsdz.png"></a>
-          <a href="2d/dzaaaaaaaaaaaaaaaasdada.png"><img src="2d/dzaaaaaaaaaaaaaaaasdada.png"></a>
-          <a href="2d/dzaazdzdadzafezadq.png"><img src="2d/dzaazdzdadzafezadq.png"></a>
-          <a href="2d/dzafeqsdzqs.png"><img src="2d/dzafeqsdzqs.png"></a>
-          <a href="2d/dzafezqsdzq.png"><img src="2d/dzafezqsdzq.png"></a>
-          <a href="2d/dzdazdzadazdazgr.png"><img src="2d/dzdazdzadazdazgr.png"></a>
-          <a href="2d/dzqaegzad.png"><img src="2d/dzqaegzad.png"></a>
-          <a href="2d/dzqdqs.png"><img src="2d/dzqdqs.png"></a>
-          <a href="2d/dzqfsdzqsfzqds.png"><img src="2d/dzqfsdzqsfzqds.png"></a>
-          <a href="2d/dzqsdzqsdzqsdz.png"><img src="2d/dzqsdzqsdzqsdz.png"></a>
-          <a href="2d/dzqsfzqfdfsq.png"><img src="2d/dzqsfzqfdfsq.png"></a>
-          <a href="2d/dzzaddqfqsd.png"><img src="2d/dzzaddqfqsd.png"></a>
-          <a href="2d/fzaedsdzqs.png"><img src="2d/fzaedsdzqs.png"></a>
-          <a href="2d/ghjk.png"><img src="2d/ghost.png"></a>
-          <a href="2d/gvoxlogo.png"><img src="2d/gvoxlogo.png"></a>
-          <a href="2d/hex_tile.png"><img src="2d/hex_tile.png"></a>
-          <a href="2d/Imusique.png"><img src="2d/Imusique.png"></a>
-          <a href="2d/little_feets.png"><img src="2d/little_feets.png"></a>
-          <!-- <a href="2d/New Piskel (1).png"><img src="2d/New Piskel (1).png"></a> -->
-          <!-- <a href="2d/New Piskel (2).png"><img src="2d/New Piskel (2).png"></a> -->
-          <!-- <a href="2d/New Piskel (3).png"><img src="2d/New Piskel (3).png"></a> -->
-          <a href="2d/New Piskel (4).png"><img src="2d/New Piskel (4).png"></a>
-          <a href="2d/New Piskel (5).png"><img src="2d/New Piskel (5).png"></a>
-          <!-- <a href="2d/New Piskel (6).png"><img src="2d/New Piskel (6).png"></a> -->
-          <!-- <a href="2d/New Piskel (7).png"><img src="2d/New Piskel (7).png"></a> -->
-          <!-- <a href="2d/New Piskel clone (1).png"><img src="2d/New Piskel clone (1).png"></a> -->
-          <a href="2d/New Piskel clone.png"><img src="2d/New Piskel clone.png"></a>
-          <a href="2d/New Piskel.png"><img src="2d/New Piskel.png"></a>
-          <!-- <a href="2d/oeuf.png"><img src="2d/oeuf.png"></a> -->
-          <a href="2d/profilpicture.png"><img src="2d/profilpicture.png"></a>
-          <a href="2d/profilpicture2.png"><img src="2d/profilpicture2.png"></a>
-          <a href="2d/qsdzqsdzqsdzqs.png"><img src="2d/qsdzqsdzqsdzqs.png"></a>
-          <a href="2d/qzdzadqdz.png"><img src="2d/qzdzadqdz.png"></a>
-          <!-- <a href="2d/Yodo.png"><img src="2d/Yodo.png"></a> -->
-          <a href="2d/wild.png"><img src="2d/wild.png"></a>
-          <a href="2d/zade.png"><img src="2d/zade.png"></a>
-          <a href="2d/zda.png"><img src="2d/zda.png"></a>
-          <a href="2d/ZdA2.png"><img src="2d/ZdA2.png"></a>
-          <a href="2d/zdaazdzaddzadzadza.png"><img src="2d/zdaazdzaddzadzadza.png"></a>
-          <a href="2d/zdafzaqsdfqsf.png"><img src="2d/zdafzaqsdfqsf.png"></a>
-          <a href="2d/zdazaddazef.png"><img src="2d/zdazaddazef.png"></a>
-          <a href="2d/zdazdfqsfzeqsdfzqsd.png"><img src="2d/zdazdfqsfzeqsdfzqsd.png"></a>
-          <a href="2d/zdqdsdzqsdzqsd.png"><img src="2d/zdqdsdzqsdzqsd.png"></a>
-          <a href="2d/zqsdzqsdzqsd.png"><img src="2d/zqsdzqsdzqsd.png"></a>
-        </div>
-      </div>
-    </div>
-
-  </article>
 </body>
 </html>

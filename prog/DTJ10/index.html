@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+* { margin: 0; padding: 0; }
+html { height: 100%; overflow: hidden; background-color: black;}
+canvas { image-rendering: pixelated; width: 100%; height: 100%; object-fit: contain; }
+</style>
+</head>
+<body style="margin: 0; padding: 0; height: 100%;">
+<img id="tiles" src="assets/tilesheet.png" hidden>
+<img id="player" src="assets/player.png" hidden>
+<audio id="victory" src="assets/victory.mp3" hidden></audio>
+<audio id="drop" src="assets/drop.mp3"  hidden></audio>
+<audio id="ding" src="assets/ding.mp3" hidden></audio>
+<audio id="death1" src="assets/death1.mp3" hidden></audio>
+<audio id="death2" src="assets/death2.mp3" hidden></audio>
+<audio id="death3" src="assets/death3.mp3" hidden></audio>
+<audio id="death4" src="assets/death4.mp3" hidden></audio>
+<audio id="death5" src="assets/death5.mp3" hidden></audio>
+<audio id="death6" src="assets/death6.mp3" hidden></audio>
+<audio id="death7" src="assets/death7.mp3" hidden></audio>
+<audio id="death8" src="assets/death8.mp3" hidden></audio>
+<audio id="death9" src="assets/death9.mp3" hidden></audio>
+<audio id="death10" src="assets/death10.mp3" hidden></audio>
+<audio id="death11" src="assets/death11.mp3" hidden></audio>
+<audio id="death12" src="assets/death12.mp3" hidden></audio>
+<audio id="death13" src="assets/death13.mp3" hidden></audio>
+<audio id="death14" src="assets/death14.mp3" hidden></audio>
+<audio id="music" src="assets/bckmusic.mp3" hidden loop></audio>
+<canvas width="576" height="432"></canvas>
+<script>
+
+let canvas = document.querySelector("canvas")
+let ctx = canvas.getContext("2d")
+ctx.imageSmoothingEnabled = 0
+
+let tilesheet = document.getElementById("tiles")
+let playerSprite = document.getElementById("player")
+
+let playerSize = 0.8
+let bounciness = 0
+let momentum = 0.9
+let speed = 40
+let jumpSpeed = 700
+let gravity = 30
+let graveAmount = 4
+let graveTime = 10
+
+let t, isGrounded, touchBorder, touchPos, currentLevel, tileHeigth, finalT, mediaRecorder, stream, recordedChunks = []
+let dt = px = py = vx = vy = ix = iy = sx = sy = tps = T = 0
+
+let paused = false
+let gameState = "game"
+let levelIndex = 0
+
+let hasStarted = false
+
+let graves = []
+
+let inputs = {
+  jump : {button : "ArrowUp", pressed : 0},
+  left : {button : "ArrowLeft", pressed : 0},
+  right : {button : "ArrowRight", pressed : 0},
+}
+
+let levels = [
+  [
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0],
+    [0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5],
+    [1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 1, 1],
+  ],
+  [
+    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+    [1, 1, 1, 2, 2, 2, 2, 2, 2, 1, 1, 1],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5],
+    [1, 1, 1, 2, 2, 2, 2, 2, 2, 1, 1, 1],
+    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+  ],
+  [
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5],
+    [0, 0, 1, 2, 2, 2, 2, 2, 2, 1, 1, 1],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4],
+    [1, 1, 1, 2, 2, 2, 2, 2, 2, 1, 1, 1],
+  ],
+  [
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5],
+    [0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1],
+    [0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 2, 2, 1, 0, 0, 0, 0, 0, 0, 0],
+    [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4],
+    [1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 1, 1],
+  ],
+  [
+    [0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1],
+    [4, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1],
+    [1, 1, 2, 0, 0, 0, 1, 1, 1, 1, 1, 1],
+    [1, 1, 2, 0, 0, 0, 2, 2, 2, 2, 1, 1],
+    [1, 1, 2, 0, 0, 0, 2, 0, 0, 0, 0, 0],
+    [1, 1, 2, 0, 0, 0, 2, 0, 0, 0, 0, 5],
+    [1, 1, 2, 0, 0, 0, 2, 0, 0, 2, 1, 1],
+    [1, 1, 2, 0, 0, 0, 0, 0, 0, 2, 1, 1],
+    [1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 1, 1],
+  ],
+  [
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 0, 0],
+  ],
+  [
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5],
+    [0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1],
+    [0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0],
+    [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4],
+    [1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1, 1],
+  ],
+  [
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5],
+    [0, 0, 0, 0, 2, 2, 2, 2, 2, 2, 1, 1],
+    [0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0],
+    [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4],
+    [1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 1, 1],
+  ],
+]
+
+function startRecording() {
+  stream = canvas.captureStream(24)
+  
+  mediaRecorder = new MediaRecorder(stream)
+  mediaRecorder.start()
+
+  mediaRecorder.ondataavailable = e => {
+    if(e.data.size > 0) {
+      recordedChunks.push(e.data)
+      downloadStream()
+    }
+  }
+}
+
+function stopRecording() {
+  mediaRecorder.stop()
+}
+
+function downloadStream() {
+  const blob = new Blob(recordedChunks, {
+    type: mediaRecorder.mimeType,
+  });
+  console.log(blob, recordedChunks)
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  document.body.appendChild(a);
+  a.style = "display: none";
+  a.href = url;
+  a.download = "run.webm";
+  a.click();
+  window.URL.revokeObjectURL(url);
+}
+
+function setup() {
+  startGame()
+}
+
+function getDistance(x1, y1, x2, y2) {
+  let dx = x1 - x2
+  let dy = y1 - y2
+  return Math.sqrt(dx*dx + dy*dy)
+}
+
+function getTileSprite(i) {
+  // if(i == 0) return "air"
+  // if(i == 1) return "ground"
+  // if(i == 2) return "spike"
+  // if(i == 3) return "grave"
+  // if(i == 4) return "spawn"
+  // if(i == 5) return "goal"
+  // if(i == 6) return "checkpoint"
+  // return "white"
+}
+
+function drawLevel(level) {
+  for(let y = 0; y < level.length; y++) {
+    for(let x = 0; x < level[y].length; x++) {
+      ctx.drawImage(
+        tilesheet,
+        0, 16 * level[y][x],
+        16, 16,
+        x * tileHeigth, y * tileHeigth,
+        tileHeigth, tileHeigth
+      )
+      if(level[y][x] == 2) {
+        ctx.fillStyle = "red"
+        ctx.globalAlpha = 0.25 * Math.max(0, 20 * Math.cos(2 * t) - 19)
+        ctx.fillRect(x * tileHeigth, y * tileHeigth, tileHeigth, tileHeigth)
+        ctx.globalAlpha = 1
+      }
+      if(level[y][x] == 5) {
+        ctx.strokeStyle = "aqua"
+        ctx.globalAlpha = 0.25 + 0.5 * (Math.sin(2 * t) + 1) / 2
+        ctx.beginPath()
+        ctx.arc((x + 0.5) * tileHeigth, (y + 0.5) * tileHeigth + 0.5, tileHeigth / 2, 0, 2 * Math.PI)
+        ctx.lineWidth = 5
+        ctx.stroke()
+        ctx.globalAlpha = 1
+      }
+    }
+  }
+}
+
+function shadowGraves() {
+  graves.forEach(grave => {
+    ctx.fillStyle = "black"
+    ctx.globalAlpha = 1 - grave[2] / graveTime
+    ctx.fillRect(grave[0] * tileHeigth, grave[1] * tileHeigth, tileHeigth, tileHeigth)
+    ctx.globalAlpha = 1
+  })
+}
+
+function drawPlayer() {
+  ctx.drawImage(playerSprite, px * tileHeigth - playerHeigth / 2, py * tileHeigth - playerHeigth / 2, playerHeigth, playerHeigth)
+}
+
+function drawGame() {
+  drawLevel(currentLevel)
+  shadowGraves()
+  drawPlayer()
+  if(levelIndex == 0) {
+    ctx.fillStyle = "white"
+    ctx.font = tileHeigth + "px serif"
+    ctx.fillText('Arrow keys to move', tileHeigth / 2, tileHeigth)
+  }
+  if(levelIndex == 1) {
+    ctx.fillStyle = "white"
+    ctx.font = tileHeigth + "px serif"
+    ctx.fillText('You have 4 graves', tileHeigth / 2, tileHeigth)
+  }
+  if(paused) {
+    ctx.fillStyle = "black"
+    ctx.globalAlpha = 0.5
+    ctx.fillRect(0, 0, canvas.width, canvas.height)
+    ctx.globalAlpha = 1
+    ctx.fillStyle = "white"
+    ctx.font = tileHeigth + "px serif"
+    ctx.fillText('PAUSED', tileHeigth / 2, canvas.height - tileHeigth / 2)
+  }
+}
+
+function drawEnding() {
+  ctx.fillStyle = "grey"
+  ctx.fillRect(0, 0, canvas.width, canvas.height)
+  ctx.fillStyle = "white"
+  ctx.font = 48 + "px serif"
+  ctx.fillText('Well done, adventurer !', canvas.width / 2 - ctx.measureText('Well done, adventurer !').width / 2, 150)
+  let time = "Time : " + Math.floor(finalT / 60) + "min " + Math.floor(finalT % 60) + "s " + Math.floor(finalT % 1 * 1000) + "ms"
+  ctx.fillText(time, canvas.width / 2 - ctx.measureText(time).width / 2, 250)
+}
+
+function drawStartScreen() {
+  ctx.fillStyle = "grey"
+  ctx.fillRect(0, 0, canvas.width, canvas.height)
+  ctx.fillStyle = "white"
+  ctx.font = 48 + "px serif"
+  ctx.fillText('Press any key', canvas.width / 2 - ctx.measureText('Press any key').width / 2, 150)
+}
+
+function isPlayerTouching(x1, y1, x2, y2) {
+  return (
+    x1 < x2 + 1 &&
+    x1 + playerSize > x2 &&
+    y1 < y2 + 1 &&
+    y1 + playerSize > y2
+  )
+}
+
+function isSolid(x, y) {
+  let i = currentLevel[y][x]
+  if(i == 1) return true
+  if(i == 3) return true
+  return false
+}
+
+function spawnPlayer() {
+  vx = vy = 0
+  px = sx
+  py = sy
+}
+
+function setSpawn(x, y) {
+  sx = x + 0.5
+  sy = y + 0.5 + (tileHeigth - playerHeigth) / (tileHeigth * 2)
+}
+
+function spikeKillPlayer(x, y) {
+  graves.push([x, y, graveTime])
+
+  currentLevel[y][x] = 3
+
+  while(graves.length > graveAmount) {
+    currentLevel[graves[0][1]][graves[0][0]] = 2
+    graves.shift()
+    document.getElementById("drop").play()
+  }
+
+  killPlayer()
+}
+
+function killPlayer() {
+  spawnPlayer()
+  document.getElementById("death" + Math.ceil(Math.random() * 14)).play()
+}
+
+function levelCompleted() {
+  levelIndex++
+  if(levelIndex >= levels.length) {
+    document.getElementById("victory").play()
+    finalT = T
+    gameState = "ending"
+    setTimeout(stopRecording, 100)
+  } else loadLevel()
+  document.getElementById("ding").play()
+}
+
+function loadLevel() {
+  currentLevel = levels[levelIndex]
+  
+  tileHeigth = canvas.height / currentLevel.length
+  playerHeigth = tileHeigth * playerSize
+  levelHeight = currentLevel.length
+  levelWidth = currentLevel[0].length
+
+  for(let y = 0; y < currentLevel.length; y++) {
+    for(let x = 0; x < currentLevel[y].length; x++) {
+      if(currentLevel[y][x] == 4) setSpawn(x, y)
+    }
+  }
+
+  graves = []
+
+  spawnPlayer()
+}
+
+function updateInputs() {
+  ix = iy = 0
+  // if(inputs.pause.pressed) paused = !paused
+  if(inputs.left.pressed) ix -= speed
+  if(inputs.right.pressed) ix += speed
+  if(isGrounded && inputs.jump.pressed) iy -= jumpSpeed
+}
+
+function updatePhysics() {
+  // inputs
+  vx += ix * dt
+  vy += iy * dt
+
+  // gravity
+  vy += gravity * dt
+
+  px += vx * dt
+  py += vy * dt
+
+  vx *= momentum
+
+  // looking a the sphere of influence of player (only works if playerHeight < tileHeight)
+  let ax = Math.round(px)
+  let ay = Math.round(py)
+  
+  // top left player coord
+  let x = px - playerSize / 2
+  let y = py - playerSize / 2
+
+  touchPos = []
+  for(let by = ay-1; by <= ay+1; by++) {
+    if(by < 0 || by >= currentLevel.length) continue
+    for(let bx = ax-1; bx <= ax+1; bx++) {
+      if(by < 0 || by >= currentLevel.length) continue
+      if(isPlayerTouching(x, y, bx, by)) {
+        if(isSolid(bx, by)) {
+          let overlapX = Math.min(x + playerSize - bx, bx + 1 - x)
+          let overlapY = Math.min(y + playerSize - by, by + 1 - y)
+          if(overlapX < overlapY) {
+            if(x < bx) x -= overlapX
+            else x += overlapX
+            vx = -vx * bounciness
+          }
+          else {
+            if(y < by) y -= overlapY
+            else y += overlapY
+            vy = -vy * bounciness
+          }
+        }
+        touchPos.push([bx, by])
+      }
+    }
+  }
+  
+  //check if offlevel
+  touchBorder = {
+    left : x < 0,
+    right : x + playerSize > levelWidth,
+    up : y < 0,
+    down : y + playerSize > levelHeight,
+  }
+  if(touchBorder.left) x = 0
+  if(touchBorder.right) x = levelWidth - playerSize
+  if(touchBorder.left || touchBorder.right) vx = -vx * bounciness
+  if(touchBorder.up) y = 0
+  if(touchBorder.down) y = levelHeight - playerSize
+  if(touchBorder.up || touchBorder.down) vy = -vy * bounciness
+  
+  px = x + playerSize / 2
+  py = y + playerSize / 2
+
+}
+
+function updateLogic() {
+  T += dt
+
+  isGrounded = false
+  touchedSpike = false
+  
+  if(touchBorder.down) killPlayer()
+  if(touchBorder.down && vy >= 0) isGrounded = true
+  
+  let closestSpike
+  let minDistance = Infinity
+  for(let i = 0; i < touchPos.length; i++) {
+    let [x, y] = touchPos[i]
+    if(py < y && isSolid(x, y) && vy >= 0) isGrounded = true
+    if(currentLevel[y][x] == 2) {
+      let distance = getDistance(px, py, x + 0.5, y + 0.5)
+      if(distance < 0.5 + playerSize / 2 && minDistance > distance) {
+        touchedSpike = true
+        minDistance = distance
+        closestSpike = [x, y]
+      }
+    }
+    if(currentLevel[y][x] == 5) levelCompleted()
+  }
+
+  if(touchedSpike) spikeKillPlayer(closestSpike[0], closestSpike[1])
+
+  if(levelIndex == 5) {
+    tps += dt
+    if(tps >= 0.5) {
+      for(let y = 1; y < currentLevel.length; y++) {
+        for(let x = 0; x < currentLevel[y].length; x++) {
+          if(currentLevel[y][x] == 2) {
+            currentLevel[y][x] = 0
+            currentLevel[y - 1][x] = 2
+          }
+        }
+      }
+
+      for(let x = 1; x < currentLevel[0].length; x++) {
+        if(currentLevel[0][x] == 2) {
+          currentLevel[0][x] = 0
+          currentLevel[currentLevel.length - 1][x] = 2
+        }
+      }
+
+      tps %= 0.5
+    }
+  }
+
+  for(let i = graves.length - 1; i >= 0; i--) {
+    graves[i][2] -= dt
+    if(graves[i][2] <= 0) {
+      currentLevel[graves[0][1]][graves[0][0]] = 2
+      graves.splice(i, 1)
+      document.getElementById("drop").play()
+    }
+  }
+}
+
+function update(elapsed) {
+  elapsed /= 1000
+
+  requestAnimationFrame(update)
+
+  if(t == undefined) t = elapsed
+  dt = elapsed - t
+  t = elapsed
+
+  updateInputs()
+
+  ctx.clearRect(0, 0, canvas.width, canvas.height)
+  switch(gameState) {
+    case "game":
+      if(!paused) {
+        updatePhysics()
+        updateLogic()
+      }
+      drawGame()
+      break
+    case "ending":
+      drawEnding()
+  }
+}
+
+function startGame() {
+  hasStarted = true
+  paused = false
+
+  document.getElementById("music").play()
+
+  loadLevel(0)
+  
+  requestAnimationFrame(update)
+
+  startRecording()
+}
+
+document.onvisibilitychange = () => {
+  if(document.visibilityState == "hidden") {
+    paused = true
+    if(mediaRecorder) mediaRecorder.pause()
+  }
+}
+
+window.addEventListener("keydown", e => {
+  if(!hasStarted) {
+    setup()
+  }
+  for(key of Object.keys(inputs))
+    if(e.key == inputs[key].button)
+      inputs[key].pressed = 1
+    if(e.key == "Escape") {
+      paused = !paused
+      if(paused) {
+        mediaRecorder.pause()
+      } else {
+        mediaRecorder.resume()
+      }
+    }
+})
+
+window.addEventListener("keyup", e => {
+  for(key of Object.keys(inputs))
+    if(e.key == inputs[key].button)
+      inputs[key].pressed = 0
+})
+
+window.onload = drawStartScreen
+
+</script>
+</body>
+</html>

@@ -132,6 +132,10 @@ h1.a {
 article {
   margin: .5em;
 }
+article .center {
+  width: min(100%, 70em);
+  margin: auto;
+}
 .image {
   float: right;
 }
